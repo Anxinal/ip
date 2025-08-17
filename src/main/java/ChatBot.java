@@ -4,21 +4,28 @@ public class ChatBot {
     static String name = "SHIROHA"; 
     static String logo = "Chatbot - Shiroha XD";
 
-    public static void greet(){
+   
+    private static void greet(){
         System.out.println("Hello I am your Chatbot "+ ChatBot.name);
         System.out.println("Anything in your mind right now? Want to walk by the sea?");
         addLineBreak();
     }
-    public static void exit(){
+    private static void exit(){
         System.out.println("See you.");
         addLineBreak();
     }
-    public static void addLineBreak(){
+    private static void addLineBreak(){
         System.out.println("----------------");
     }
-
-    public static String receiveInput(){
+    
+    private static String receiveInput(){
         Scanner s = new Scanner(System.in);
         return s.nextLine();
+    }
+
+    private static void echo(String toEcho){
+       addLineBreak();
+       System.out.println(toEcho);
+       addLineBreak();
     }
 }
