@@ -1,11 +1,11 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ChatBot {
-    static String name = "SHIROHA"; 
-    static String logo = "Chatbot - Shiroha XD";
-    static ArrayList<String> list = new ArrayList<String>(100);
-    static final String[] KEYWORDS = {"list", "bye"};
+    private static String name = "SHIROHA"; 
+    private static String logo = "Chatbot - Shiroha XD";
+    private static TaskList taskList = new TaskList();
+    private static final String[] KEYWORDS = {"list", "bye"};
+
     public static void start(){
         greet();
         while(true){
@@ -38,13 +38,11 @@ public class ChatBot {
     private static String receiveInput(){
         Scanner s = new Scanner(System.in);
         String next = s.nextLine();
-        if(!isCommandKeyWord(next)) list.add(next);
+        if(!isCommandKeyWord(next)) taskList.add(next);
         return next;
     }
     private static void printList(){
-        for(int i = 0; i < list.size(); i++){
-            System.out.println(i + ". " + list.get(i));
-        }
+        System.out.println(taskList.toString());
     }
 
     private static boolean isCommandKeyWord(String command){
