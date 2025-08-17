@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ChatBot {
     static String name = "SHIROHA"; 
     static String logo = "Chatbot - Shiroha XD";
-
+    static ArrayList<String> list = new ArrayList<String>(100);
     public static void start(){
         greet();
         while(true){
@@ -15,7 +16,7 @@ public class ChatBot {
             echo(next);
         }
     }
-    
+
     private static void greet(){
         System.out.println("Hello I am your Chatbot "+ ChatBot.name);
         System.out.println("Anything in your mind right now? Want to walk by the sea?");
@@ -31,7 +32,9 @@ public class ChatBot {
     
     private static String receiveInput(){
         Scanner s = new Scanner(System.in);
-        return s.nextLine();
+        String next = s.nextLine();
+        list.add(next);
+        return next;
     }
 
     private static void echo(String toEcho){
