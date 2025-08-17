@@ -4,7 +4,18 @@ public class ChatBot {
     static String name = "SHIROHA"; 
     static String logo = "Chatbot - Shiroha XD";
 
-   
+    public static void start(){
+        greet();
+        while(true){
+            String next = receiveInput();
+            if(next.equals("bye")){
+                exit();
+                break;
+            }
+            echo(next);
+        }
+    }
+    
     private static void greet(){
         System.out.println("Hello I am your Chatbot "+ ChatBot.name);
         System.out.println("Anything in your mind right now? Want to walk by the sea?");
