@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ChatBot {
     static String name = "SHIROHA"; 
     static String logo = "Chatbot - Shiroha XD";
@@ -13,5 +15,10 @@ public class ChatBot {
     }
     public static void addLineBreak(){
         System.out.println("----------------");
+    }
+
+    public static String receiveInput(){
+        Scanner s = new Scanner(System.in);
+        return s.nextLine();
     }
 }
