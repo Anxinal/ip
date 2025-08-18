@@ -5,7 +5,7 @@ public class ChatBot {
     private static String name = "SHIROHA"; 
     private static String logo = "Chatbot - Shiroha XD";
     private static TaskList taskList = new TaskList();
-    private abstract class Command {
+    private abstract static class Command {
         public abstract String action(); // return the command action with a return message to be displayed
         String[] args;
         private Command(String[] args){
@@ -25,7 +25,7 @@ public class ChatBot {
             return new DefaultCommand(line);
         }
 
-        private class DefaultCommand extends Command{
+        private static class DefaultCommand extends Command{
 
             private DefaultCommand(String name){
                 super(new String[]{name});
@@ -39,7 +39,7 @@ public class ChatBot {
         }
 
 
-        private class ListCommand extends Command{
+        private static class ListCommand extends Command{
              private ListCommand(){
                 super(new String[0]);
             }
@@ -52,7 +52,7 @@ public class ChatBot {
                 return line.equals("list");
             }
         }
-        private class MarkCommand extends Command{
+        private static class MarkCommand extends Command{
             static final String notifMessage = "That's happy news. Wait a moment..";
             private MarkCommand(String number){
                 super(new String[]{number});
@@ -69,7 +69,7 @@ public class ChatBot {
             }
         }
 
-        private class UnmarkCommand extends Command{
+        private static class UnmarkCommand extends Command{
 
             static final String notifMessage = "Never mind about that. I'll do it for you as well";
 
@@ -98,7 +98,8 @@ public class ChatBot {
                 break;
             }
             Command nextAction = Command.processAction(next);
-            nextAction.action();
+            System.out.println(nextAction.action());
+            addLineBreak();
         }
     }
 
@@ -112,7 +113,7 @@ public class ChatBot {
         addLineBreak();
     }
     private static void addLineBreak(){
-        System.out.println("----------------");
+        System.out.println("--------(-w-)---------");
     }
     
     private static String receiveInput(){

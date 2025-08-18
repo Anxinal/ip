@@ -17,7 +17,7 @@ public class TaskList {
 
     public String toString(){
         String items = "";
-        for(int i = 0; i < list.size(); i++){
+        for(int i = 0; i < tasks.size(); i++){
             items += i + ". " + tasks.get(i).toString() + "\n";
         }
         return items;
