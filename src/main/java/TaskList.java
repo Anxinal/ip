@@ -9,6 +9,11 @@ public class TaskList {
     public void add(String taskName){
         tasks.add(Task.newTask(taskName));
     }
+    public String switchTaskStatus(int index, boolean done){
+        if(done) tasks.get(index).mark();
+        if(!done) tasks.get(index).unmark();  
+        return this.tasks.get(index).toString();
+    }
 
     public String toString(){
         String items = "";

@@ -1,11 +1,94 @@
 import java.util.Scanner;
 
+
 public class ChatBot {
     private static String name = "SHIROHA"; 
     private static String logo = "Chatbot - Shiroha XD";
     private static TaskList taskList = new TaskList();
-    private static final String[] KEYWORDS = {"list", "bye"};
+    private abstract class Command {
+        public abstract String action(); // return the command action with a return message to be displayed
+        String[] args;
+        private Command(String[] args){
+            this.args = args;
+        }
 
+        public static Command processAction(String line){
+            if(ListCommand.check(line)){
+                return new ListCommand();
+            }
+            if(MarkCommand.check(line)){
+                return new MarkCommand(line.split(" ")[1]);
+            }
+            if(UnmarkCommand.check(line)){
+                return new UnmarkCommand(line.split(" ")[1]);
+            }
+            return new DefaultCommand(line);
+        }
+
+        private class DefaultCommand extends Command{
+
+            private DefaultCommand(String name){
+                super(new String[]{name});
+            }
+
+            @Override
+            public String action(){
+                taskList.add(this.args[0]);
+                return "added :" + this.args[0];
+            }
+        }
+
+
+        private class ListCommand extends Command{
+             private ListCommand(){
+                super(new String[0]);
+            }
+
+            @Override
+            public String action(){
+                return ChatBot.taskList.toString();
+            }
+            public static boolean check(String line){
+                return line.equals("list");
+            }
+        }
+        private class MarkCommand extends Command{
+            static final String notifMessage = "That's happy news. Wait a moment..";
+            private MarkCommand(String number){
+                super(new String[]{number});
+            }
+          
+            @Override
+            public String action(){
+                String message = ChatBot.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), true);
+                return notifMessage + "\n" + message;
+            }
+
+            public static boolean check(String line){
+                return line.startsWith("mark") && line.split(" ").length == 2;
+            }
+        }
+
+        private class UnmarkCommand extends Command{
+
+            static final String notifMessage = "Never mind about that. I'll do it for you as well";
+
+            private UnmarkCommand(String number){
+                super(new String[]{number});
+            }
+
+            @Override
+            public String action(){
+                String message = ChatBot.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), false);
+                return notifMessage + "\n" + message;
+            }
+            public static boolean check(String line){
+                return line.startsWith("unmark") && line.split(" ").length == 2;
+            }
+        }
+        
+    }
+    
     public static void start(){
         greet();
         while(true){
@@ -14,11 +97,8 @@ public class ChatBot {
                 exit();
                 break;
             }
-            if(next.equals("list")){
-                printList();
-                continue;
-            }
-            echo(next);
+            Command nextAction = Command.processAction(next);
+            nextAction.action();
         }
     }
 
@@ -38,22 +118,8 @@ public class ChatBot {
     private static String receiveInput(){
         Scanner s = new Scanner(System.in);
         String next = s.nextLine();
-        if(!isCommandKeyWord(next)) taskList.add(next);
         return next;
     }
-    private static void printList(){
-        System.out.println(taskList.toString());
-    }
 
-    private static boolean isCommandKeyWord(String command){
-        for(String word: KEYWORDS){
-            if(command.startsWith(word)) return true;
-        }
-        return false;
-    }
-    private static void echo(String toEcho){
-       addLineBreak();
-       System.out.println("added: " + toEcho);
-       addLineBreak();
-    }
+
 }
