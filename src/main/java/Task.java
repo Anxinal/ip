@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.RET;
+
 public class Task {
     private String description;
     private boolean isDone;
@@ -11,8 +13,19 @@ public class Task {
         this.isDone = false;
     }
 
-    public static Task newTask(int type, String description){
-        return new Task(description);
+    public static Task newTask(int type, String[] details){
+        switch(type){
+            case 0 -> {
+                return new TodoTask(details[0]);
+            }
+            case 1 -> {
+                return new EventTask(details[0], details[1], details[2]);
+            }
+            case 2 -> {
+                return new DeadlineTask(details[0], details[1]);
+            }
+            default -> throw new UnknownCommandException("");
+        }
     }
 
     public void mark(){
@@ -53,7 +66,7 @@ public class Task {
         }
         @Override
         public String toString(){
-            return "[T]" + super.toString() + String.format(" (by %s)", deadline);
+            return "[D]" + super.toString() + String.format(" (by %s)", deadline);
         }
     }
 

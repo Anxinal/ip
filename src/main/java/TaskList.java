@@ -6,19 +6,28 @@ public class TaskList {
     public TaskList(){
         tasks = new ArrayList<>(100);
     }
-    public void add(String taskName){
-        tasks.add(Task.newTask(taskName));
+    public Task add(String taskName){
+        Task toAdd = Task.newTask(0,new String[]{taskName});
+        tasks.add(toAdd);
+        return toAdd;
     }
+
+    public Task add(int taskType, String[] details){
+        Task toAdd = Task.newTask(taskType,details);
+        tasks.add(toAdd);
+        return toAdd;
+    }
+
     public String switchTaskStatus(int index, boolean done){
-        if(done) tasks.get(index).mark();
-        if(!done) tasks.get(index).unmark();  
-        return this.tasks.get(index).toString();
+        if(done) tasks.get(index - 1).mark();
+        if(!done) tasks.get(index - 1).unmark();  
+        return this.tasks.get(index - 1).toString();
     }
 
     public String toString(){
         String items = "";
         for(int i = 0; i < tasks.size(); i++){
-            items += i + ". " + tasks.get(i).toString() + "\n";
+            items += (i + 1) + ". " + tasks.get(i).toString() + "\n";
         }
         return items;
     }

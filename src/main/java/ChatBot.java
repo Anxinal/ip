@@ -17,11 +17,15 @@ public class ChatBot {
                 return new ListCommand();
             }
             if(MarkCommand.check(line)){
-                return new MarkCommand(line.split(" ")[1]);
+                return new MarkCommand(line);
             }
             if(UnmarkCommand.check(line)){
-                return new UnmarkCommand(line.split(" ")[1]);
+                return new UnmarkCommand(line);
             }
+            if(AddTaskCommand.check(line)){
+                return AddTaskCommand.convertTaskCommand(line);
+            }
+            
             return new DefaultCommand(line);
         }
 
@@ -36,6 +40,100 @@ public class ChatBot {
                 taskList.add(this.args[0]);
                 return "added :" + this.args[0];
             }
+        }
+        private abstract static class AddTaskCommand extends Command{
+            public static boolean check(String line){
+                return line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event");
+            }
+            public static AddTaskCommand convertTaskCommand(String line){
+
+                if(TodoCommand.check(line)){ 
+                    return new TodoCommand(line.split("todo ")[1]);
+                }
+
+                if(EventCommand.check(line)){
+                    return new EventCommand(line.split("event ")[1]);
+                }
+
+                return new DeadlineCommand(line.split("deadline ")[1]);
+            }
+            public AddTaskCommand(String[] args){
+                super(args);
+            }
+            @Override 
+            public String toString(){
+                return "New task comming :> \n";
+            }
+        }
+
+        private static class TodoCommand extends AddTaskCommand{
+            
+            public static boolean check(String line){
+                return line.startsWith("todo");
+            }
+
+            private TodoCommand(String taskName){
+                super(new String[]{taskName});
+            }
+
+            @Override
+            public String action(){             
+                return super.toString() + taskList.add(this.args[0]).toString();
+            }
+
+        }
+
+        private static class EventCommand extends AddTaskCommand{
+            
+            public static boolean check(String line){
+                return line.startsWith("event");
+            }
+
+            private EventCommand(String eventDetails){
+                super(new String[3]);
+                if(!eventDetails.contains(" /from ") || !eventDetails.contains(" /to ")){
+                    throw new UnknownCommandException("The format for your new Event looks weird.");
+                }
+                String[] temp = eventDetails.split(" /from ");
+                this.args[0] = temp[0];
+                String[] temp2 = temp[1].split(" /to ");
+                this.args[1] = temp2[0];
+                this.args[2] = temp2[1];
+                
+            }
+
+            @Override
+            public String action(){
+            
+                return super.toString() + taskList.add(1, this.args).toString();
+            }
+
+        }
+
+        private static class DeadlineCommand extends AddTaskCommand{
+            
+            public static boolean check(String line){
+                return line.startsWith("deadline");
+            }
+
+            // No name should be included in event details
+            private DeadlineCommand(String eventDetails){
+                super(new String[2]);
+                System.out.println(eventDetails);
+                if(!eventDetails.contains(" /by ")){
+                    throw new UnknownCommandException("Probably no the best way to create a new deadline task. :x"); 
+                }
+                String[] temp = eventDetails.split(" /by ");
+                this.args[0] = temp[0];
+                this.args[1] = temp[1];
+                
+            }
+
+            @Override
+            public String action(){
+                return super.toString() + taskList.add(2, this.args).toString();
+            }
+
         }
 
 
@@ -54,8 +152,9 @@ public class ChatBot {
         }
         private static class MarkCommand extends Command{
             static final String notifMessage = "That's happy news. Wait a moment..";
-            private MarkCommand(String number){
-                super(new String[]{number});
+            private MarkCommand(String line){
+                super(new String[]{line.split(" ")[1]});
+
             }
           
             @Override
@@ -73,8 +172,8 @@ public class ChatBot {
 
             static final String notifMessage = "Never mind about that. I'll do it for you as well";
 
-            private UnmarkCommand(String number){
-                super(new String[]{number});
+            private UnmarkCommand(String line){
+                super(new String[]{line.split(" ")[1]});
             }
 
             @Override
