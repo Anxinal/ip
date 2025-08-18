@@ -190,8 +190,9 @@ public class ChatBot {
     
     public static void start(){
         greet();
+        Scanner s = new Scanner(System.in);
         while(true){
-            String next = receiveInput();
+            String next = receiveInput(s);
             if(next.equals("bye")){
                 exit();
                 break;
@@ -200,6 +201,7 @@ public class ChatBot {
             System.out.println(nextAction.action());
             addLineBreak();
         }
+        s.close();
     }
 
     private static void greet(){
@@ -215,8 +217,7 @@ public class ChatBot {
         System.out.println("--------(-w-)---------");
     }
     
-    private static String receiveInput(){
-        Scanner s = new Scanner(System.in);
+    private static String receiveInput(Scanner s){
         String next = s.nextLine();
         return next;
     }

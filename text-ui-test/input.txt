@@ -1,0 +1,8 @@
+event having dinner with friends /from 6pm /to 9pm
+deadline math assignment /by 2025/8/20
+list
+mark 1
+mark 2
+unmark 2
+list
+bye

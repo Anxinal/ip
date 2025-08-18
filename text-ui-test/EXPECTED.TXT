@@ -1,7 +1,29 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+Hello I am your Chatbot SHIROHA
+Anything in your mind right now? Want to walk by the sea?
+--------(-w-)---------
+New task comming :> 
+[E][ ] having dinner with friends (from: 6pm to: 9pm)
+--------(-w-)---------
+math assignment /by 2025/8/20
+New task comming :> 
+[D][ ] math assignment (by 2025/8/20)
+--------(-w-)---------
+1. [E][ ] having dinner with friends (from: 6pm to: 9pm)
+2. [D][ ] math assignment (by 2025/8/20)
 
+--------(-w-)---------
+That's happy news. Wait a moment..
+[E][X] having dinner with friends (from: 6pm to: 9pm)
+--------(-w-)---------
+That's happy news. Wait a moment..
+[D][X] math assignment (by 2025/8/20)
+--------(-w-)---------
+Never mind about that. I'll do it for you as well
+[D][ ] math assignment (by 2025/8/20)
+--------(-w-)---------
+1. [E][X] having dinner with friends (from: 6pm to: 9pm)
+2. [D][ ] math assignment (by 2025/8/20)
+
+--------(-w-)---------
+See you.
+--------(-w-)---------
