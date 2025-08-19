@@ -1,8 +1,22 @@
 event having dinner with friends /from 6pm /to 9pm
 deadline math assignment /by 2025/8/20
+todo play basketball
+todo
+deadline
+event
+a random command
 list
 mark 1
-mark 2
-unmark 2
+mark -1
+mark 0
+mark
+mark 1000
+mark I love CS
+unmark 1
+unmark -2
+unmark 3
+unmark 1000
+unmark I hate CS
 list
+list an item
 bye
