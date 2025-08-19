@@ -5,6 +5,7 @@ public class ChatBot {
     private static String name = "SHIROHA"; 
     private static String logo = "Chatbot - Shiroha XD";
     private static TaskList taskList = new TaskList();
+
     private abstract static class Command {
         public abstract String action(); // return the command action with a return message to be displayed
         String[] args;
@@ -26,25 +27,19 @@ public class ChatBot {
                 return AddTaskCommand.convertTaskCommand(line);
             }
             
-            return new DefaultCommand(line);
+            throw new UnknownCommandException("Stop talking like that! I want to understand you (;-;) ");
         }
 
-        private static class DefaultCommand extends Command{
 
-            private DefaultCommand(String name){
-                super(new String[]{name});
-            }
-
-            @Override
-            public String action(){
-                taskList.add(this.args[0]);
-                return "added :" + this.args[0];
-            }
-        }
         private abstract static class AddTaskCommand extends Command{
+
             public static boolean check(String line){
-                return line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event");
+
+                if(!(line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event"))) return false;
+                if(line.split(" ").length == 1) throw new UnknownCommandException("What are you exactly going to do?");
+                return true;
             }
+
             public static AddTaskCommand convertTaskCommand(String line){
 
                 if(TodoCommand.check(line)){ 
@@ -86,17 +81,20 @@ public class ChatBot {
         private static class EventCommand extends AddTaskCommand{
             
             public static boolean check(String line){
-                return line.startsWith("event");
+                if(!line.startsWith("event")) return false;
+                if(!line.contains(" /from ")) throw new UnknownCommandException("From What time?");
+                if(!line.contains(" /to ")) throw new UnknownCommandException("Until When?");
+                return true;
             }
 
             private EventCommand(String eventDetails){
                 super(new String[3]);
-                if(!eventDetails.contains(" /from ") || !eventDetails.contains(" /to ")){
-                    throw new UnknownCommandException("The format for your new Event looks weird.");
-                }
+
                 String[] temp = eventDetails.split(" /from ");
+                if(temp.length < 2 || temp[0].trim().equals("")) throw new UnknownCommandException("I will give a random name to your task list XD!");
                 this.args[0] = temp[0];
                 String[] temp2 = temp[1].split(" /to ");
+                 if(temp2.length < 2 || temp2[0].trim().equals("")) throw new UnknownCommandException("A non-existent event that starts in another dimension!");
                 this.args[1] = temp2[0];
                 this.args[2] = temp2[1];
                 
@@ -104,7 +102,6 @@ public class ChatBot {
 
             @Override
             public String action(){
-            
                 return super.toString() + taskList.add(1, this.args).toString();
             }
 
@@ -112,18 +109,21 @@ public class ChatBot {
 
         private static class DeadlineCommand extends AddTaskCommand{
             
-            public static boolean check(String line){
-                return line.startsWith("deadline");
+            public static boolean check(String line){                     
+                if(!line.startsWith("deadline")) return false;
+                if(!line.contains(" /by ")) throw new UnknownCommandException("So what is the deadline?");
+                return true;
             }
 
             // No name should be included in event details
             private DeadlineCommand(String eventDetails){
                 super(new String[2]);
-                System.out.println(eventDetails);
-                if(!eventDetails.contains(" /by ")){
-                    throw new UnknownCommandException("Probably no the best way to create a new deadline task. :x"); 
+                if(!eventDetails.contains(" /by ") || eventDetails.endsWith(" /by ")){
+                    throw new UnknownCommandException("Err What is the deadline for the this task ... :x "); 
                 }
                 String[] temp = eventDetails.split(" /by ");
+                if(temp.length < 2 || temp[0].trim().equals("")) throw new UnknownCommandException("I will give a random name to your task list XD!");
+
                 this.args[0] = temp[0];
                 this.args[1] = temp[1];
                 
@@ -164,7 +164,19 @@ public class ChatBot {
             }
 
             public static boolean check(String line){
-                return line.startsWith("mark") && line.split(" ").length == 2;
+                if(!line.startsWith("mark")) return false;
+                if(line.trim().equals("mark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
+                try {
+                   int index = Integer.parseInt(line.split("mark ")[1]);
+                
+                   if(index <= 0 || index > taskList.getSize()){
+                    throw new UnknownCommandException("Your number does not look right...");
+                   }
+
+                } catch (NumberFormatException e) {
+                    throw new UnknownCommandException("Is that even a number...");
+                }
+                return true;
             }
         }
 
@@ -182,7 +194,19 @@ public class ChatBot {
                 return notifMessage + "\n" + message;
             }
             public static boolean check(String line){
-                return line.startsWith("unmark") && line.split(" ").length == 2;
+                if(!line.startsWith("unmark")) return false;
+                if(line.trim().equals("unmark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
+                try {
+                   int index = Integer.parseInt(line.split("unmark ")[1]);
+                
+                   if(index <= 0 || index > taskList.getSize()){
+                    throw new UnknownCommandException("Your number does not look right...");
+                   }
+
+                } catch (NumberFormatException e) {
+                    throw new UnknownCommandException("Is that even a number...");
+                }
+                return true;
             }
         }
         
@@ -192,14 +216,20 @@ public class ChatBot {
         greet();
         Scanner s = new Scanner(System.in);
         while(true){
-            String next = receiveInput(s);
-            if(next.equals("bye")){
-                exit();
-                break;
+            try{
+                String next = receiveInput(s);
+                if(next.equals("bye")){
+                    exit();
+                    break;
+                }
+                Command nextAction = Command.processAction(next);
+                System.out.println(nextAction.action());
+                addLineBreak();
+            }catch(UnknownCommandException e){
+                System.out.println(e.getMessage());
+                addLineBreak();
             }
-            Command nextAction = Command.processAction(next);
-            System.out.println(nextAction.action());
-            addLineBreak();
+
         }
         s.close();
     }

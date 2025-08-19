@@ -31,5 +31,7 @@ public class TaskList {
         }
         return items;
     }
-    
+    public int getSize(){
+        return tasks.size();
+    }
 }
