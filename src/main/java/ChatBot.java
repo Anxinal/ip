@@ -26,6 +26,9 @@ public class ChatBot {
             if(AddTaskCommand.check(line)){
                 return AddTaskCommand.convertTaskCommand(line);
             }
+            if(DeleteCommand.check(line)){
+                return new DeleteCommand(line);
+            }
             
             throw new UnknownCommandException("Stop talking like that! I want to understand you (;-;) ");
         }
@@ -208,6 +211,37 @@ public class ChatBot {
                 }
                 return true;
             }
+        }
+        private static class DeleteCommand extends Command {
+            static final String notifMessage = "You don't want this task anymore? OK...";
+            private DeleteCommand(String line){
+                super(new String[]{line.split(" ")[1]});
+
+            }     
+
+            @Override
+            public String action(){
+                return String.format("You don't want this task anymore? OK... done! : %n %s %n You still have %d tasks in your list.", 
+                                     taskList.delete(Integer.parseInt(args[0])).toString(), 
+                                     taskList.getSize());
+ 
+            }
+
+            public static boolean check(String line){
+                if(!line.startsWith("delete")) return false;
+                if(line.trim().equals("delete")) throw new UnknownCommandException("I am going to delete your whole list if you don't tell me which one to!");
+                try {
+                   int index = Integer.parseInt(line.split("delete ")[1]);
+                
+                   if(index <= 0 || index > taskList.getSize()){
+                    throw new UnknownCommandException("You shouldn't delete some that that does not exist...");
+                   }
+
+                } catch (NumberFormatException e) {
+                    throw new UnknownCommandException("Is that a number from a different dimension?");
+                }
+                return true;
+            }            
         }
         
     }

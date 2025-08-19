@@ -34,4 +34,9 @@ public class TaskList {
     public int getSize(){
         return tasks.size();
     }
+    
+    // returns the number of elements left in the list
+    public Task delete(int index){
+        return tasks.remove(index - 1);
+    }
 }
