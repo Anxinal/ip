@@ -1,4 +1,4 @@
-public class Main {
+public class UI {
 
     static String name = "SHIROHA";
         
