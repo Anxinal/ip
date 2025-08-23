@@ -8,10 +8,12 @@ public class ChatBot {
     private static final String logo = "Chatbot - Shiroha XD";
     private Storage store;
     private UI ui;
+    private Parser parser;
 
     public ChatBot(){
         store = Storage.initialiseStorage("");
         ui = new UI();
+        parser = new Parser(store.readTaskList());
     }
 
     public void start(){
@@ -24,7 +26,7 @@ public class ChatBot {
                     exit();
                     break;
                 }
-                Command nextAction = Command.processAction(next, store.readTaskList());
+                Command nextAction = parser.parse(next);
                 ui.renderChatBotMessage(nextAction.action());
 
             }catch(UnknownCommandException e){
