@@ -157,8 +157,14 @@ public abstract class Command {
           
             @Override
             public String action(){
-                String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), true);
-                return notifMessage + "\n" + message;
+                try {
+                     String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), true);
+                     return notifMessage + "\n" + message;
+                }catch (IndexOutOfBoundsException e){
+                    throw new UnknownCommandException("Your number does not look right...");
+                }
+               
+                
             }
 
             public static boolean check(String line){
@@ -173,9 +179,7 @@ public abstract class Command {
 
                 } catch (NumberFormatException e) {
                     throw new UnknownCommandException("Is that even a number...");
-                } catch (IndexOutOfBoundsException e){
-                    throw new UnknownCommandException("Your number does not look right...");
-                }
+                } 
                 return true;
             }
         }
@@ -190,8 +194,14 @@ public abstract class Command {
 
             @Override
             public String action(){
-                String message = ChatBot.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), false);
-                return notifMessage + "\n" + message;
+                try{
+                    String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), false);
+                    return notifMessage + "\n" + message;
+                } catch (IndexOutOfBoundsException e){
+                    throw new UnknownCommandException("Your number does not look right...");
+                }
+
+                
             }
             public static boolean check(String line){
                 if(!line.startsWith("unmark")) return false;
@@ -201,9 +211,7 @@ public abstract class Command {
 
                 } catch (NumberFormatException e) {
                     throw new UnknownCommandException("Is that even a number...");
-                } catch (IndexOutOfBoundsException e){
-                    throw new UnknownCommandException("Your number does not look right...");
-                }
+                } 
                 return true;
             }
         }
