@@ -1,52 +1,50 @@
+import java.lang.classfile.instruction.StoreInstruction;
 import java.util.Scanner;
 
 
 public class ChatBot {
-    private static String name = "SHIROHA"; 
-    private static String logo = "Chatbot - Shiroha XD";
-    private static TaskList taskList = new TaskList();
 
-   
-    
-    public static void start(){
+    private static final String name = "SHIROHA"; 
+    private static final String logo = "Chatbot - Shiroha XD";
+    private Storage store;
+    private UI ui;
+
+    public ChatBot(){
+        store = Storage.initialiseStorage("");
+        ui = new UI();
+    }
+
+    public void start(){
         greet();
-        Scanner s = new Scanner(System.in);
+        
         while(true){
             try{
-                String next = receiveInput(s);
+                String next = this.ui.getNextInput();
                 if(next.equals("bye")){
                     exit();
                     break;
                 }
-                Command nextAction = Command.processAction(next, taskList);
-                System.out.println(nextAction.action());
-                addLineBreak();
+                Command nextAction = Command.processAction(next, store.readTaskList());
+                ui.renderChatBotMessage(nextAction.action());
+
             }catch(UnknownCommandException e){
-                System.out.println(e.getMessage());
-                addLineBreak();
+                ui.renderErrorMessage(e);
             }
 
         }
-        s.close();
+        this.ui.close();        
     }
 
-    private static void greet(){
-        System.out.println("Hello I am your Chatbot "+ ChatBot.name);
-        System.out.println("Anything in your mind right now? Want to walk by the sea?");
-        addLineBreak();
+    private void greet(){
+        ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.name 
+        + " \n Anything in your mind right now? Want to walk by the sea?");
+
     }
-    private static void exit(){
-        System.out.println("See you.");
-        addLineBreak();
+    private  void exit(){
+        ui.renderChatBotMessage("See you.");
     }
-    private static void addLineBreak(){
-        System.out.println("--------(-w-)---------");
-    }
+
     
-    private static String receiveInput(Scanner s){
-        String next = s.nextLine();
-        return next;
-    }
 
 
 }
