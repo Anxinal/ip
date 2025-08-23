@@ -1,8 +1,8 @@
 public class Main {
 
-    static String name = "SHIROHA";
         
     public static void main(String[] args) {
-        ChatBot.start();
+        ChatBot temp = new ChatBot();
+        temp.start();
     }
 }
