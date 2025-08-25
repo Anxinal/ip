@@ -1,5 +1,8 @@
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 
 public class Task implements Serializable{
@@ -50,27 +53,42 @@ public class Task implements Serializable{
         }
     }
     private static class EventTask extends Task{
-        String from;
-        String to;
+        LocalDate from;
+        LocalDate to;
+        static final String DATE_PRINT_FORMAT = "MMM dd yy";
         private EventTask(String description, String from, String to){
             super(description);
-            this.from = from;
-            this.to = to;
+            try {
+                this.from = LocalDate.parse(from);
+                this.to = LocalDate.parse(to);
+                if(this.from.isAfter(this.to)) throw new UnknownCommandException("Time travel? Back to the future?");
+            } catch (DateTimeParseException e) {
+                throw new UnknownCommandException("Your event date comes from... imagination?");
+            }
+
         }
         @Override
         public String toString(){
-            return "[E]" + super.toString() + String.format(" (from: %s to: %s)", from, to);
+            return "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
+                                                            from.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)), 
+                                                            to.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
     }
     private static class DeadlineTask extends Task{
-        String deadline;
+        LocalDate deadline;
+        static final String DATE_PRINT_FORMAT = "MMM dd yy";
         private DeadlineTask(String description, String deadline){
             super(description);
-            this.deadline = deadline;
+            try {
+               this.deadline =LocalDate.parse(deadline); 
+            } catch (DateTimeParseException e) {
+                throw new UnknownCommandException("Your deadline date comes from... imagination? Or make it in yyyy-mm-dd format");
+            }
+            
         }
         @Override
         public String toString(){
-            return "[D]" + super.toString() + String.format(" (by %s)", deadline);
+            return "[D]" + super.toString() + String.format(" (by %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
     }
 
