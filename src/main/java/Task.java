@@ -1,7 +1,12 @@
 
-public class Task {
+import java.io.Serializable;
+
+
+public class Task implements Serializable{
     private String description;
     private boolean isDone;
+    private static final long serialVersionUID = 1000;
+    
 
     public String toString(){
         String finishStat = isDone ? "X" : " ";
