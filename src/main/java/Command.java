@@ -217,12 +217,19 @@ public abstract class Command {
         }
         private static class DeleteCommand extends Command {
             private DeleteCommand(String line, TaskList taskList){
+
                 super(new String[]{line.split(" ")[1]}, taskList);
 
             }     
 
             @Override
             public String action(){
+                try {
+                    String confirmation = taskList.delete(Integer.parseInt(args[0])).toString();
+                } catch (IndexOutOfBoundsException e) {
+                    throw new UnknownCommandException("This number points to an unknown empty message to delete. What should I do...");
+                }
+                
                 return String.format("You don't want this task anymore? OK... done! : %n %s %n You still have %d tasks in your list.", 
                                      taskList.delete(Integer.parseInt(args[0])).toString(), 
                                      taskList.getSize());
@@ -234,6 +241,7 @@ public abstract class Command {
                 if(line.trim().equals("delete")) throw new UnknownCommandException("I am going to delete your whole list if you don't tell me which one to!");
                 try {
                    int index = Integer.parseInt(line.split("delete ")[1]);
+                  
 
                 } catch (NumberFormatException e) {
                     throw new UnknownCommandException("Is that a number from a different dimension?");
