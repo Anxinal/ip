@@ -35,6 +35,10 @@ public class Task implements Serializable{
         }
     }
 
+    public boolean isDone(){
+        return this.isDone;
+    }
+
     public void mark(){
         this.isDone = true;
     }
@@ -67,9 +71,15 @@ public class Task implements Serializable{
             }
 
         }
+        public boolean isHappening(){
+            LocalDate today = LocalDate.now();
+            return (today.isEqual(from) || today.isAfter(from)) && (today.isEqual(to) || today.isBefore(to)) && !this.isDone();
+        }
         @Override
         public String toString(){
-            return "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
+             String happeningMarker = isHappening() ? " (Happening now!)" : "";
+
+            return happeningMarker + "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
                                                             from.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)), 
                                                             to.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
@@ -86,9 +96,14 @@ public class Task implements Serializable{
             }
             
         }
+        public boolean isOverDue(){
+            return this.deadline.isBefore(LocalDate.now()) && !this.isDone();
+        }
+
         @Override
         public String toString(){
-            return "[D]" + super.toString() + String.format(" (by %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
+            String overDueMarker = isOverDue() ? " (Overdue!)" : "";
+            return overDueMarker + "[D]" + super.toString() + String.format(" (by %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
     }
 
