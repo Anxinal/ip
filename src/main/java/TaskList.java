@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class TaskList implements Serializable{
     
@@ -42,6 +43,16 @@ public class TaskList implements Serializable{
     // returns the number of elements left in the list
     public Task delete(int index){
         return tasks.remove(index - 1);
+    }
+
+    public TaskList filter(Predicate<Task> condition){
+        TaskList filtered = new TaskList();
+        for(Task t: this.tasks){
+            if(condition.test(t)){
+                filtered.tasks.add(t);
+            }
+        }
+        return filtered;
     }
 
 
