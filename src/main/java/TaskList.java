@@ -1,8 +1,12 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TaskList {
+public class TaskList implements Serializable{
     
     private ArrayList<Task> tasks;
+    //for version control in case different serial IDs are implemented
+    private static final long serialVersionUID = 1000;
+
     public TaskList(){
         tasks = new ArrayList<>(100);
     }
@@ -39,4 +43,6 @@ public class TaskList {
     public Task delete(int index){
         return tasks.remove(index - 1);
     }
+
+
 }
