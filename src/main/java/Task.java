@@ -6,11 +6,15 @@ import java.time.format.DateTimeParseException;
 
 
 public class Task implements Serializable{
+    
     private String description;
     private boolean isDone;
     private static final long serialVersionUID = 1000;
-    
 
+    /**
+     * returns the string representation of the task, including its status and description
+     */
+    @Override
     public String toString(){
         String finishStat = isDone ? "X" : " ";
         return "["+ finishStat +"]" + " " + description;
@@ -19,7 +23,12 @@ public class Task implements Serializable{
         this.description = description;
         this.isDone = false;
     }
-
+    /**
+     * A factory method to create different types of tasks, where 0 = todo, 1 = event, 2 = deadline
+     * @param type The type of task to create
+     * @param details The details of the task to create
+     * @return The created task
+     */
     public static Task newTask(int type, String[] details){
         switch(type){
             case 0 -> {
@@ -34,15 +43,21 @@ public class Task implements Serializable{
             default -> throw new UnknownCommandException("");
         }
     }
-
+    /**
+    * Returns true if the task is done, false otherwise
+    */
     public boolean isDone(){
         return this.isDone;
     }
-
+    /**
+     * Marks the task as done, whether it is already done or not
+     */
     public void mark(){
         this.isDone = true;
     }
-
+        /**
+     * Marks the task as not done,  whether it is already done or not
+     */
     public void unmark(){
         this.isDone = false;
     }
@@ -60,6 +75,7 @@ public class Task implements Serializable{
         LocalDate from;
         LocalDate to;
         static final String DATE_PRINT_FORMAT = "MMM dd yy";
+
         private EventTask(String description, String from, String to){
             super(description);
             try {
@@ -71,7 +87,11 @@ public class Task implements Serializable{
             }
 
         }
-        public boolean isHappening(){
+        /**
+         * * Checks if the event is happening today
+         * @return true if the event is happening today, false otherwise
+         */
+        private boolean isHappening(){
             LocalDate today = LocalDate.now();
             return (today.isEqual(from) || today.isAfter(from)) && (today.isEqual(to) || today.isBefore(to)) && !this.isDone();
         }
@@ -87,6 +107,7 @@ public class Task implements Serializable{
     private static class DeadlineTask extends Task{
         LocalDate deadline;
         static final String DATE_PRINT_FORMAT = "MMM dd yy";
+
         private DeadlineTask(String description, String deadline){
             super(description);
             try {
@@ -96,7 +117,11 @@ public class Task implements Serializable{
             }
             
         }
-        public boolean isOverDue(){
+        /**
+         * Checks if the event is already overdue based on the current date
+         * @return true if the task is already overdue, false otherwise
+         */
+        private boolean isOverDue(){
             return this.deadline.isBefore(LocalDate.now()) && !this.isDone();
         }
 
