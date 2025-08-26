@@ -1,6 +1,6 @@
 package shiroha;
 
-import exceptions.UnknownCommandException;
+import shiroha.exceptions.UnknownCommandException;
 
 public class ChatBot {
 
