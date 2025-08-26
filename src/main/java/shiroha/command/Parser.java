@@ -1,4 +1,4 @@
-package shiroha;
+package shiroha.command;
 
 import shiroha.tasks.TaskList;
 
