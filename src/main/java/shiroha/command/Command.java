@@ -1,3 +1,8 @@
+package shiroha.command;
+
+import shiroha.exceptions.UnknownCommandException;
+import shiroha.tasks.TaskList;
+
 public abstract class Command {
        
         /**

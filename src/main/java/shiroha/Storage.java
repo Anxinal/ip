@@ -1,9 +1,13 @@
+package shiroha;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import shiroha.exceptions.UnknownCommandException;
+import shiroha.tasks.TaskList;
 
 public class Storage {
 
@@ -52,17 +56,19 @@ public class Storage {
     public void writeTaskList(){
         // TODO: Implement this
 
-        try{
+        try {
         File save = new File(path);
         if(!save.exists()){
             save.createNewFile();
+            System.out.println("New file created at " + path);
         }
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
         out.writeObject(taskListRef);
         out.close();
-        } catch(IOException e){
+        } catch (Exception e) {
             System.err.println(e);
-        } 
+        }
+
 
     }
 }
