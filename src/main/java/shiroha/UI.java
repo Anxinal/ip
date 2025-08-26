@@ -1,3 +1,4 @@
+package shiroha;
 import java.util.Scanner;
 
 public class UI {

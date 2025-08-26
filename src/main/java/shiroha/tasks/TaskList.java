@@ -1,3 +1,4 @@
+package shiroha.tasks;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.function.Predicate;
