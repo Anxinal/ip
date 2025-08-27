@@ -77,7 +77,13 @@ public class Task implements Serializable{
         Task other = (Task) obj;
         return this.isDone == other.isDone && description.equals(other.description);
     }
-
+    /**
+     * Return the description of the task as how it is initialised
+     * @return the string description of the task
+     */
+    public String getDescription(){
+        return this.description;
+    }
     private static class TodoTask extends Task{
         private TodoTask(String description){
             super(description);
