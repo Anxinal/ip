@@ -26,7 +26,8 @@ public class Storage {
         return new Storage(path);
     }
     /**
-     * Reads the task list from the file specified in the path, throws UnknownCommandException if the file cannot be read
+     * Reads the task list from the file specified in the path, throws UnknownCommandException if the file is corrupted
+     * If the file does not exist or is empty, returns a new task list
      * @return The task list read from the file, or a new task list if the file does not exist or is empty
      */
     public TaskList readTaskList(){

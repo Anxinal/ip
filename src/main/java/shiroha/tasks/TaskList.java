@@ -12,6 +12,13 @@ public class TaskList implements Serializable{
     public TaskList(){
         tasks = new ArrayList<>(100);
     }
+    @Override
+    public boolean equals(Object other){
+        if(other == this) return true;
+        if(!(other instanceof TaskList)) return false;
+        TaskList o = (TaskList) other;
+        return this.tasks.equals(o.tasks);
+    }
 
     /**
      * Adds a new task to the task list，when no extra details are needed
