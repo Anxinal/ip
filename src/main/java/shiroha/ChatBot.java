@@ -6,8 +6,8 @@ import shiroha.exceptions.UnknownCommandException;
 
 public class ChatBot {
 
-    private static final String name = "SHIROHA"; 
-    private static final String logo = "Chatbot - Shiroha XD";
+    private static final String NAME = "SHIROHA"; 
+    private static final String LOGO = "Chatbot - Shiroha XD";
     private Storage store;
     private UI ui;
     private Parser parser;
@@ -45,7 +45,7 @@ public class ChatBot {
      * Greets the user with a welcome message
      */
     private void greet(){
-        ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.name 
+        ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.NAME 
         + " \n Anything in your mind right now? Want to walk by the sea?");
 
     }
