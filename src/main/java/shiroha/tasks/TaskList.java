@@ -87,6 +87,7 @@ public class TaskList implements Serializable{
      */
     public TaskList filter(Predicate<Task> condition){
         TaskList filtered = new TaskList();
+        
         for(Task t: this.tasks){
             if(condition.test(t)){
                 filtered.tasks.add(t);
