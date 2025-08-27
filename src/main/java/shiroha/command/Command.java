@@ -219,8 +219,8 @@ public abstract class Command {
         }
 
         private static class UnmarkCommand extends Command{
-
-            static final String notifMessage = "Never mind about that. I'll do it for you as well";
+            
+            static final String NOTIF_MESSAGE = "Never mind about that. I'll do it for you as well";
 
             private UnmarkCommand(String line, TaskList taskList){
                 super(new String[]{line.split(" ")[1]}, taskList);
@@ -230,7 +230,7 @@ public abstract class Command {
             public String action(){
                 try{
                     String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), false);
-                    return notifMessage + "\n" + message;
+                    return NOTIF_MESSAGE + "\n" + message;
                 } catch (IndexOutOfBoundsException e){
                     throw new UnknownCommandException("Your number does not look right...");
                 }
