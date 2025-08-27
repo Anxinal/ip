@@ -64,7 +64,7 @@ public class Task implements Serializable{
     public void unmark(){
         this.isDone = false;
     }
-    
+
     /**
      * Compares two tasks for equality based on their description and completion status
      * @param obj The object to compare with
@@ -151,7 +151,7 @@ public class Task implements Serializable{
         @Override
         public String toString(){
             String overDueMarker = isOverDue() ? " (Overdue!)" : "";
-            return overDueMarker + "[D]" + super.toString() + String.format(" (by %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
+            return overDueMarker + "[D]" + super.toString() + String.format(" (by: %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
         @Override
         public boolean equals(Object other) {
