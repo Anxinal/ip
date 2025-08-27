@@ -9,12 +9,12 @@ public class ChatBot {
     private static final String name = "SHIROHA"; 
     private static final String logo = "Chatbot - Shiroha XD";
     private Storage store;
-    private UI ui;
+    private ParserTest ui;
     private Parser parser;
     private static final String DEFAULT_MEMO_PATH = "./data/ShirohaTaskMemory.mem";
     public ChatBot(){
         store = Storage.initialiseStorage(DEFAULT_MEMO_PATH);
-        ui = new UI();
+        ui = new ParserTest();
         parser = new Parser(store.readTaskList());
     }
     /**

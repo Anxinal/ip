@@ -64,6 +64,19 @@ public class Task implements Serializable{
     public void unmark(){
         this.isDone = false;
     }
+    
+    /**
+     * Compares two tasks for equality based on their description and completion status
+     * @param obj The object to compare with
+     * @return true if the tasks are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Task other = (Task) obj;
+        return this.isDone == other.isDone && description.equals(other.description);
+    }
 
     private static class TodoTask extends Task{
         private TodoTask(String description){
@@ -106,6 +119,13 @@ public class Task implements Serializable{
                                                             from.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)), 
                                                             to.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            EventTask other = (EventTask) obj;
+            return super.equals(other) && this.from.equals(other.from) && this.to.equals(other.to);
+        }
     }
     private static class DeadlineTask extends Task{
         LocalDate deadline;
@@ -132,6 +152,13 @@ public class Task implements Serializable{
         public String toString(){
             String overDueMarker = isOverDue() ? " (Overdue!)" : "";
             return overDueMarker + "[D]" + super.toString() + String.format(" (by %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
+        }
+        @Override
+        public boolean equals(Object other) {
+            if (this == other)  return true;
+            if (other == null || getClass() != other.getClass()) return false;
+            DeadlineTask otherDeadline = (DeadlineTask) other;
+            return super.equals(otherDeadline) && this.deadline.equals(otherDeadline.deadline);
         }
     }
 
