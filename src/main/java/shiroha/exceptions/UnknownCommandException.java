@@ -1,3 +1,4 @@
+package shiroha.exceptions;
 
 
 public class UnknownCommandException extends RuntimeException {

@@ -1,6 +1,8 @@
-import java.lang.classfile.instruction.StoreInstruction;
-import java.util.Scanner;
+package shiroha;
 
+import shiroha.command.Command;
+import shiroha.command.Parser;
+import shiroha.exceptions.UnknownCommandException;
 
 public class ChatBot {
 
@@ -15,7 +17,9 @@ public class ChatBot {
         ui = new UI();
         parser = new Parser(store.readTaskList());
     }
-
+    /**
+     * Starts the chatbot, greets the user, and enters a loop to process user input until "bye" is received
+     */
     public void start(){
         greet();
         
@@ -37,13 +41,18 @@ public class ChatBot {
         this.store.writeTaskList();
         this.ui.close();        
     }
-
+    /**
+     * Greets the user with a welcome message
+     */
     private void greet(){
         ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.name 
         + " \n Anything in your mind right now? Want to walk by the sea?");
 
     }
-    private  void exit(){
+    /**
+     * Display the goodbye message
+     */
+    private void exit(){
         ui.renderChatBotMessage("See you.");
     }
 

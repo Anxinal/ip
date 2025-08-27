@@ -1,13 +1,28 @@
-public abstract class Command {
+package shiroha.command;
 
-        public abstract String action(); // return the command action with a return message to be displayed
+import shiroha.exceptions.UnknownCommandException;
+import shiroha.tasks.TaskList;
+
+public abstract class Command {
+       
+        /**
+         * Executes the command and returns the string output as the message to be displayed by the chatbot
+         * @return The string output after executing the command
+         */
+        public abstract String action();
         String[] args;
         TaskList taskList;
         private Command(String[] args, TaskList taskList){
             this.args = args;
             this.taskList = taskList;
         }
-
+        /**
+         * Processes the user input and returns the corresponding command
+         * @param line the user input
+         * @param taskList reference to current task list
+         * @return the command to be executed
+         * @throws UnknownCommandException if the command is not recognized
+         */
         public static Command processAction(String line, TaskList taskList){
             if(ListCommand.check(line)){
                 return new ListCommand(taskList);
@@ -30,7 +45,12 @@ public abstract class Command {
 
 
         private abstract static class AddTaskCommand extends Command{
-
+            /**
+             * Checks if the command is a valid add task command
+             * @param line the user input
+             * @return true if the command is a valid add task command, false otherwise
+             * @throws UnknownCommandException if the command is not valid
+             */
             public static boolean check(String line){
 
                 if(!(line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event"))) return false;
@@ -60,7 +80,9 @@ public abstract class Command {
         }
 
         private static class TodoCommand extends AddTaskCommand{
-            
+            /**
+             * Checks if the command is a valid todo command
+             */
             public static boolean check(String line){
                 return line.startsWith("todo");
             }
@@ -77,7 +99,9 @@ public abstract class Command {
         }
 
         private static class EventCommand extends AddTaskCommand{
-            
+             /**
+             * Checks if the command is a valid command to create an event task
+             */
             public static boolean check(String line){
                 if(!line.startsWith("event")) return false;
                 if(!line.contains(" /from ")) throw new UnknownCommandException("From What time?");
@@ -106,7 +130,9 @@ public abstract class Command {
         }
 
         private static class DeadlineCommand extends AddTaskCommand{
-            
+            /**
+             * Checks if the command is a valid command to create a deadline task
+             */
             public static boolean check(String line){                     
                 if(!line.startsWith("deadline")) return false;
                 if(!line.contains(" /by ")) throw new UnknownCommandException("So what is the deadline?");
@@ -144,6 +170,9 @@ public abstract class Command {
             public String action(){
                 return this.taskList.toString();
             }
+             /**
+             * Checks if the command is a valid command to list all tasks
+             */
             public static boolean check(String line){
                 return line.equals("list");
             }
@@ -166,7 +195,9 @@ public abstract class Command {
                
                 
             }
-
+            /**
+             * Checks if the command is a valid command to mark a task as done
+             */
             public static boolean check(String line){
                 if(!line.startsWith("mark")) return false;
                 if(line.trim().equals("mark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
@@ -203,6 +234,9 @@ public abstract class Command {
 
                 
             }
+             /**
+             * Checks if the command is a valid command to mark a task as undone
+             */
             public static boolean check(String line){
                 if(!line.startsWith("unmark")) return false;
                 if(line.trim().equals("unmark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
@@ -217,23 +251,33 @@ public abstract class Command {
         }
         private static class DeleteCommand extends Command {
             private DeleteCommand(String line, TaskList taskList){
+
                 super(new String[]{line.split(" ")[1]}, taskList);
 
             }     
 
             @Override
             public String action(){
+                try {
+                    String confirmation = taskList.delete(Integer.parseInt(args[0])).toString();
+                } catch (IndexOutOfBoundsException e) {
+                    throw new UnknownCommandException("This number points to an unknown empty message to delete. What should I do...");
+                }
+                
                 return String.format("You don't want this task anymore? OK... done! : %n %s %n You still have %d tasks in your list.", 
                                      taskList.delete(Integer.parseInt(args[0])).toString(), 
                                      taskList.getSize());
  
             }
-
+             /**
+             * Checks if the command is a valid command to delete a task
+             */
             public static boolean check(String line){
                 if(!line.startsWith("delete")) return false;
                 if(line.trim().equals("delete")) throw new UnknownCommandException("I am going to delete your whole list if you don't tell me which one to!");
                 try {
                    int index = Integer.parseInt(line.split("delete ")[1]);
+                  
 
                 } catch (NumberFormatException e) {
                     throw new UnknownCommandException("Is that a number from a different dimension?");
