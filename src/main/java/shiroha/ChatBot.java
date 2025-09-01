@@ -3,6 +3,7 @@ package shiroha;
 import shiroha.command.Command;
 import shiroha.command.Parser;
 import shiroha.exceptions.UnknownCommandException;
+import shiroha.ui.UI;
 
 public class ChatBot {
 
