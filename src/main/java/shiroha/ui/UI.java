@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 public class UI {
 
     private Scene mainPage;
+    private Scene mainPage;
     /**
      * Renders a message from the chatbot to the user with line breaks before and after the message
      * @param s The message to be rendered
@@ -81,12 +82,14 @@ public class UI {
      */
     public String getNextInput(){
         return "";
+        return "";
     }
 
     /**
      * Closes the scanner
      */
     public void close(){
+        return;
         return;
     }
 
