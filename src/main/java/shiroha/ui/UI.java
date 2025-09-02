@@ -81,12 +81,14 @@ public class UI {
      */
     public String getNextInput(){
         return "";
+        return "";
     }
 
     /**
      * Closes the scanner
      */
     public void close(){
+        return;
         return;
     }
 
