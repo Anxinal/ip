@@ -1,5 +1,4 @@
 package shiroha.ui;
-import java.util.Scanner;
 
 import javafx.scene.Scene;
 import javafx.application.Application;
@@ -8,35 +7,48 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
+ 
 public class UI {
 
     private Scene mainPage;
-    private Scene mainPage;
+    ScrollPane scrollPane;   
+    VBox dialogContainer;
+    private static final double HEIGHT = 600.0;
+    private static final double WIDTH  = 400.0;
+    private static final double HEIGHT_DIALOG = 535;
+    private static final double WIDTH_DIALOG = 385;
+    private static final String BOT_LOGO_PATH = "/images/shiroha.jpg";
+    private static final String USER_LOGO_PATH = "/images/shiroha.jpg";
+    private final Image userImage;
+    private final Image botImage;
+
     /**
-     * Renders a message from the chatbot to the user with line breaks before and after the message
-     * @param s The message to be rendered
+     * initialise the chatbot interface without any messages displayed.
+     * The interface consists of a scrollable dialog container to display messages,
+     * a text field for user input, and a send button.
      */
-    public void renderChatBotMessage(String s){
-        addLineBreak();
-        System.out.println(s);
-        addLineBreak();
-    }
     public UI(){
-         ScrollPane scrollPane = new ScrollPane();
-         VBox dialogContainer = new VBox();
-         scrollPane.setContent(dialogContainer);
 
-         TextField userInput = new TextField();
-         Button sendButton = new Button("Send");
+        // initialise the images for the user and the bot
+        userImage  = new Image(this.getClass().getResourceAsStream(USER_LOGO_PATH));
+        botImage = new Image(this.getClass().getResourceAsStream(BOT_LOGO_PATH));
 
-         AnchorPane mainLayout = new AnchorPane();
-         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
-                 mainLayout.setPrefSize(400.0, 600.0);
+        this.scrollPane = new ScrollPane();
+        this.dialogContainer = new VBox();
+        scrollPane.setContent(dialogContainer);
 
-        scrollPane.setPrefSize(385, 535);
+        TextField userInput = new TextField();
+        Button sendButton = new Button("Send");
+
+        AnchorPane mainLayout = new AnchorPane();
+        mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
+                 mainLayout.setPrefSize(WIDTH, HEIGHT);
+
+        scrollPane.setPrefSize(WIDTH_DIALOG, HEIGHT_DIALOG);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
@@ -60,9 +72,31 @@ public class UI {
         this.mainPage = new Scene(mainLayout);
     }
 
+    /**
+     * directly returns the main scene of the chatbot interface after initialisation
+     * @return the main scene of the chatbot interface
+     */
     public Scene getScene(){
         return this.mainPage;
     }
+
+    
+    /**
+     * Renders a message from the chatbot to the user with line breaks before and after the message
+     * @param s The message to be rendered
+     */
+    public void renderChatBotMessage(String s){
+        this.dialogContainer.getChildren().add(new DialogBox(s, botImage));
+    }
+    
+    /**
+     * Render UserInput message on the dialog container
+     * @param input The message to be rendered
+     */
+    public void renderUserMessage(String input){
+        this.dialogContainer.getChildren().add(new DialogBox(input, userImage));
+    }
+
     /**
      * Renders an error message to the user with line breaks before and after the message
      * @param err The exception containing the error message to be rendered
@@ -82,7 +116,7 @@ public class UI {
      */
     public String getNextInput(){
         return "";
-        return "";
+
     }
 
     /**
@@ -90,7 +124,7 @@ public class UI {
      */
     public void close(){
         return;
-        return;
+
     }
 
 }
