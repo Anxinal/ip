@@ -98,8 +98,8 @@ public class UI {
      * Renders a message from the chatbot to the user with line breaks before and after the message
      * @param s The message to be rendered
      */
-    public void renderChatBotMessage(String s){
-        this.dialogContainer.getChildren().add(new DialogBox(s, botImage));
+    public void renderChatBotMessage(String output){
+        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(output, botImage, DialogBox.DigalogType.NORMAL));
     }
 
     /**
@@ -107,7 +107,7 @@ public class UI {
      * @param input The message to be rendered
      */
     public void renderUserMessage(String input){
-        this.dialogContainer.getChildren().add(new DialogBox(input, userImage));
+        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(input, userImage, DialogBox.DigalogType.USER));
     }
 
     /**
@@ -115,13 +115,10 @@ public class UI {
      * @param err The exception containing the error message to be rendered
      */
     public void renderErrorMessage(Exception err){
-        addLineBreak();
-        this.dialogContainer.getChildren().add(new DialogBox(err.getMessage(), botImage));
+        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(err.getMessage(), botImage, DialogBox.DigalogType.ERROR));
     }
 
-    private void addLineBreak(){
-        System.out.println("--------(-w-)---------");
-    }
+
     /**
      * Handles the next line of input from the user
      * @return The next line of input from the user
