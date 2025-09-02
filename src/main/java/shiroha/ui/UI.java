@@ -21,8 +21,8 @@ public class UI {
     private static final double WIDTH  = 400.0;
     private static final double HEIGHT_DIALOG = 535;
     private static final double WIDTH_DIALOG = 385;
-    private static final String BOT_LOGO_PATH = "/images/shiroha.jpg";
-    private static final String USER_LOGO_PATH = "/images/shiroha.jpg";
+    private static final String BOT_LOGO_PATH = "/images/Shiroha.jpg";
+    private static final String USER_LOGO_PATH = "/images/User.png";
     private final Image userImage;
     private final Image botImage;
 
@@ -88,7 +88,7 @@ public class UI {
     public void renderChatBotMessage(String s){
         this.dialogContainer.getChildren().add(new DialogBox(s, botImage));
     }
-    
+
     /**
      * Render UserInput message on the dialog container
      * @param input The message to be rendered
