@@ -18,6 +18,7 @@ public class Main extends Application {
         stage.setMinWidth(400.0);
         stage.setScene(s); 
         stage.show(); // Render the stage.
+        bot.start();
     }
 
 }

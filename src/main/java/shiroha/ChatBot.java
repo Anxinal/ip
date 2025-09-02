@@ -30,23 +30,24 @@ public class ChatBot {
     public void start(){
         greet();
         
-        while(true){
-            try{
-                String next = this.ui.getNextInput();
-                if(next.equals("bye")){
-                    exit();
-                    break;
-                }
-                Command nextAction = parser.parse(next);
-                ui.renderChatBotMessage(nextAction.action());
+        // while(true){
+        //     try{
+        //         String next = this.ui.getNextInput();
+        //         if(next.equals("bye")){
+        //             exit();
+        //             break;
+        //         }
+        //         Command nextAction = parser.parse(next);
+        //         ui.renderChatBotMessage(nextAction.action());
 
-            }catch(UnknownCommandException e){
-                ui.renderErrorMessage(e);
-            }
+        //     }catch(UnknownCommandException e){
+        //         ui.renderErrorMessage(e);
+        //     }
 
-        }
-        this.store.writeTaskList();
-        this.ui.close();        
+        // }
+
+        //this.store.writeTaskList();
+       // this.ui.close();        
     }
     /**
      * Greets the user with a welcome message
