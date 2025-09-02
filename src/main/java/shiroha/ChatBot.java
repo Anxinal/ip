@@ -24,9 +24,15 @@ public class ChatBot {
     public Scene getUiComponent(){
         return this.ui.getScene();
     }
+
+    /**
+     * returns the name of the chatbot
+     * @return the name of the chatbot
+     */
     public String getName(){
         return ChatBot.NAME;
     }
+
     public void start(){
         greet();
         
@@ -49,6 +55,7 @@ public class ChatBot {
         //this.store.writeTaskList();
        // this.ui.close();        
     }
+    
     /**
      * Greets the user with a welcome message
      */
