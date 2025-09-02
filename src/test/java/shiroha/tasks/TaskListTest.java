@@ -20,13 +20,13 @@ public class TaskListTest {
     public void addTaskTest2(){
         TaskList test = new TaskList();
         test.add("read book");
-        test.add(2, new String[]{"return book", "2025-08-30"});
-        test.add(1, new String[]{"project meeting", "2025-09-01", "2025-09-02"});
+        test.add(2, new String[]{"return book", "2125-08-30"});
+        test.add(1, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
 
         TaskListStub stub = new TaskListStub();
         stub.add("read book");
-        stub.add(2, new String[]{"return book", "2025-08-30"});
-        stub.add(1, new String[]{"project meeting", "2025-09-01", "2025-09-02"});
+        stub.add(2, new String[]{"return book", "2125-08-30"});
+        stub.add(1, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
         assertEquals(stub.toString(), test.toString());
     }
 
@@ -34,8 +34,8 @@ public class TaskListTest {
     public void markTaskTest(){
         TaskList test = new TaskList();
         Task todo = test.add("read book");
-        Task deadline = test.add(2, new String[]{"return book", "2025-08-30"});
-        Task event = test.add(1, new String[]{"project meeting", "2025-09-01", "2025-09-02"});
+        Task deadline = test.add(2, new String[]{"return book", "2125-08-30"});
+        Task event = test.add(1, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
         test.switchTaskStatus(2, true);
         String expected = "";
         expected += "1. " + todo.toString() + "\n";

@@ -4,7 +4,7 @@ import shiroha.command.Command;
 import shiroha.command.Parser;
 import shiroha.exceptions.UnknownCommandException;
 import shiroha.ui.UI;
-
+import javafx.scene.Scene;
 public class ChatBot {
 
     private static final String NAME = "SHIROHA"; 
@@ -21,6 +21,12 @@ public class ChatBot {
     /**
      * Starts the chatbot, greets the user, and enters a loop to process user input until "bye" is received
      */
+    public Scene getUiComponent(){
+        return this.ui.getScene();
+    }
+    public String getName(){
+        return ChatBot.NAME;
+    }
     public void start(){
         greet();
         
