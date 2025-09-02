@@ -11,12 +11,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
- 
+import shiroha.ChatBot;
+
 public class UI {
 
     private Scene mainPage;
     ScrollPane scrollPane;   
     VBox dialogContainer;
+    ChatBot bot;
+
     private static final double HEIGHT = 600.0;
     private static final double WIDTH  = 400.0;
     private static final double HEIGHT_DIALOG = 535;
@@ -31,7 +34,10 @@ public class UI {
      * The interface consists of a scrollable dialog container to display messages,
      * a text field for user input, and a send button.
      */
-    public UI(){
+    public UI(ChatBot bot){
+
+        // handle the chatbot instance for responding to user input
+        this.bot = bot;
 
         // initialise the images for the user and the bot
         userImage  = new Image(this.getClass().getResourceAsStream(USER_LOGO_PATH));
@@ -60,6 +66,13 @@ public class UI {
         userInput.setPrefWidth(325.0);
 
         sendButton.setPrefWidth(55.0);
+
+        sendButton.setOnMouseClicked((event) -> {
+            String input = userInput.getText();
+            renderUserMessage(input);
+            handleNextInput(input);
+            userInput.clear();
+        });
 
         AnchorPane.setTopAnchor(scrollPane, 1.0);
 
@@ -103,20 +116,18 @@ public class UI {
      */
     public void renderErrorMessage(Exception err){
         addLineBreak();
-        System.out.println(err.getMessage());
-        addLineBreak();
+        this.dialogContainer.getChildren().add(new DialogBox(err.getMessage(), botImage));
     }
 
     private void addLineBreak(){
         System.out.println("--------(-w-)---------");
     }
     /**
-     * Gets the next line of input from the user
+     * Handles the next line of input from the user
      * @return The next line of input from the user
      */
-    public String getNextInput(){
-        return "";
-
+    public void handleNextInput(String input){
+        bot.respond(input);
     }
 
     /**

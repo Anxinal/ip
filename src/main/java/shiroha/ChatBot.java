@@ -15,7 +15,7 @@ public class ChatBot {
     private static final String DEFAULT_MEMO_PATH = "./data/ShirohaTaskMemory.mem";
     public ChatBot(){
         store = Storage.initialiseStorage(DEFAULT_MEMO_PATH);
-        ui = new UI();
+        ui = new UI(this);
         parser = new Parser(store.readTaskList());
     }
     /**
@@ -55,7 +55,22 @@ public class ChatBot {
         //this.store.writeTaskList();
        // this.ui.close();        
     }
-    
+
+    public void respond(String input){
+        try{
+            if(input.equals("bye")){
+                exit();
+                //this.ui.close();
+                ui.renderChatBotMessage("See you.");
+            }
+            Command nextAction = parser.parse(input);
+            ui.renderChatBotMessage(nextAction.action());
+
+        }catch(UnknownCommandException e){
+            ui.renderErrorMessage(e);
+        }
+    }
+
     /**
      * Greets the user with a welcome message
      */
