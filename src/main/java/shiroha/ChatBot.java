@@ -33,7 +33,11 @@ public class ChatBot {
         return ChatBot.NAME;
     }
 
+    public void start(){
+        greet();
+    }
 
+    
     public void respond(String input){
         try{
             if(input.equals("bye")){
@@ -55,7 +59,6 @@ public class ChatBot {
     private void greet(){
         ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.NAME 
         + " \n Anything in your mind right now? Want to walk by the sea?");
-
     }
     /**
      * Display the goodbye message

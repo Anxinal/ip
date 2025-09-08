@@ -70,8 +70,10 @@ public abstract class Command {
                 if(EventCommand.check(line)){
                     return new EventCommand(line.split("event ")[1], taskList);
                 }
-
-                return new DeadlineCommand(line.split("deadline ")[1], taskList);
+                if(DeadlineCommand.check(line)){
+                    return new DeadlineCommand(line.split("deadline ")[1], taskList);
+                }
+                throw new UnknownCommandException("I don't know what kind of task is that...");
             }
             public AddTaskCommand(String[] args, TaskList taskList){
                 super(args, taskList);
@@ -127,7 +129,9 @@ public abstract class Command {
 
             @Override
             public String action(){
+                
                 return super.toString() + taskList.add(1, this.args).toString();
+
             }
 
         }
