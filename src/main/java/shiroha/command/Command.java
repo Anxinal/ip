@@ -12,10 +12,26 @@ public abstract class Command {
         public abstract String action();
         String[] args;
         TaskList taskList;
-        private Command(String[] args, TaskList taskList){
+
+        protected Command(String[] args, TaskList taskList){
             this.args = args;
             this.taskList = taskList;
         }
+
+        /**
+         * A helper function for all types of commands(including all subclasses) to check if a string is a number
+         * @param s the string to be checked
+         * @return whether the string can be converted to a number
+         */
+        protected static boolean isConvertableToNumber(String s){
+            try {
+                Integer.parseInt(s);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
         /**
          * Processes the user input and returns the corresponding command
          * @param line the user input
@@ -44,275 +60,9 @@ public abstract class Command {
             }
             
             throw new UnknownCommandException("Stop talking like that! I want to understand you (;-;) ");
-        }
+        }      
 
+        
 
-        private abstract static class AddTaskCommand extends Command{
-            /**
-             * Checks if the command is a valid add task command
-             * @param line the user input
-             * @return true if the command is a valid add task command, false otherwise
-             * @throws UnknownCommandException if the command is not valid
-             */
-            public static boolean check(String line){
-
-                if(!(line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event"))) return false;
-                if(line.split(" ").length == 1) throw new UnknownCommandException("What are you exactly going to do?");
-                return true;
-            }
-
-            public static AddTaskCommand convertTaskCommand(String line, TaskList taskList){
-
-                if(TodoCommand.check(line)){ 
-                    return new TodoCommand(line.split("todo ")[1], taskList);
-                }
-
-                if(EventCommand.check(line)){
-                    return new EventCommand(line.split("event ")[1], taskList);
-                }
-                if(DeadlineCommand.check(line)){
-                    return new DeadlineCommand(line.split("deadline ")[1], taskList);
-                }
-                throw new UnknownCommandException("I don't know what kind of task is that...");
-            }
-            public AddTaskCommand(String[] args, TaskList taskList){
-                super(args, taskList);
-            }
-            @Override 
-            public String toString(){
-                return "New task comming :> \n";
-            }
-        }
-
-        private static class TodoCommand extends AddTaskCommand{
-            /**
-             * Checks if the command is a valid todo command
-             */
-            public static boolean check(String line){
-                return line.startsWith("todo");
-            }
-
-            private TodoCommand(String taskName, TaskList taskList){
-                super(new String[]{taskName}, taskList);
-            }
-
-            @Override
-            public String action(){             
-                return super.toString() + taskList.add(this.args[0]).toString();
-            }
-
-        }
-
-        private static class EventCommand extends AddTaskCommand{
-             /**
-             * Checks if the command is a valid command to create an event task
-             */
-            public static boolean check(String line){
-                if(!line.startsWith("event")) return false;
-                if(!line.contains(" /from ")) throw new UnknownCommandException("From What time?");
-                if(!line.contains(" /to ")) throw new UnknownCommandException("Until When?");
-                return true;
-            }
-
-            private EventCommand(String eventDetails,TaskList taskList){
-                super(new String[3], taskList);
-
-                String[] temp = eventDetails.split(" /from ");
-                if(temp.length < 2 || temp[0].trim().equals("")) throw new UnknownCommandException("I will give a random name to your task list XD!");
-                this.args[0] = temp[0];
-                String[] temp2 = temp[1].split(" /to ");
-                 if(temp2.length < 2 || temp2[0].trim().equals("")) throw new UnknownCommandException("A non-existent event that starts in another dimension!");
-                this.args[1] = temp2[0];
-                this.args[2] = temp2[1];
-                
-            }
-
-            @Override
-            public String action(){
-                
-                return super.toString() + taskList.add(1, this.args).toString();
-
-            }
-
-        }
-
-        private static class DeadlineCommand extends AddTaskCommand{
-            /**
-             * Checks if the command is a valid command to create a deadline task
-             */
-            public static boolean check(String line){                     
-                if(!line.startsWith("deadline")) return false;
-                if(!line.contains(" /by ")) throw new UnknownCommandException("So what is the deadline?");
-                return true;
-            }
-
-            // No name should be included in event details
-            private DeadlineCommand(String eventDetails, TaskList taskList){
-                super(new String[2], taskList);
-                if(!eventDetails.contains(" /by ") || eventDetails.endsWith(" /by ")){
-                    throw new UnknownCommandException("Err What is the deadline for the this task ... :x "); 
-                }
-                String[] temp = eventDetails.split(" /by ");
-                if(temp.length < 2 || temp[0].trim().equals("")) throw new UnknownCommandException("I will give a random name to your task list XD!");
-
-                this.args[0] = temp[0];
-                this.args[1] = temp[1];
-                
-            }
-
-            @Override
-            public String action(){
-                return super.toString() + taskList.add(2, this.args).toString();
-            }
-
-        }
-
-
-        private static class ListCommand extends Command{
-             private ListCommand(TaskList taskList){
-                super(new String[0], taskList);
-            }
-
-            @Override
-            public String action(){
-                return this.taskList.toString();
-            }
-             /**
-             * Checks if the command is a valid command to list all tasks
-             */
-            public static boolean check(String line){
-                return line.equals("list");
-            }
-        }
-        private static class MarkCommand extends Command{
-            static final String notifMessage = "That's happy news. Wait a moment..";
-            private MarkCommand(String line, TaskList taskList){
-                super(new String[]{line.split(" ")[1]}, taskList);
-
-            }
-          
-            @Override
-            public String action(){
-                try {
-                     String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), true);
-                     return notifMessage + "\n" + message;
-                }catch (IndexOutOfBoundsException e){
-                    throw new UnknownCommandException("Your number does not look right...");
-                }
-               
-                
-            }
-            /**
-             * Checks if the command is a valid command to mark a task as done
-             */
-            public static boolean check(String line){
-                if(!line.startsWith("mark")) return false;
-                if(line.trim().equals("mark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
-                try {
-                   int index = Integer.parseInt(line.split("mark ")[1]);
-                
-                   if(index <= 0 ){
-                    throw new UnknownCommandException("Your number does not look right...");
-                   }
-
-                } catch (NumberFormatException e) {
-                    throw new UnknownCommandException("Is that even a number...");
-                } 
-                return true;
-            }
-        }
-
-        private static class UnmarkCommand extends Command{
-            
-            static final String NOTIF_MESSAGE = "Never mind about that. I'll do it for you as well";
-
-            private UnmarkCommand(String line, TaskList taskList){
-                super(new String[]{line.split(" ")[1]}, taskList);
-            }
-
-            @Override
-            public String action(){
-                try{
-                    String message = this.taskList.switchTaskStatus(Integer.parseInt(this.args[0]), false);
-                    return NOTIF_MESSAGE + "\n" + message;
-                } catch (IndexOutOfBoundsException e){
-                    throw new UnknownCommandException("Your number does not look right...");
-                }
-
-                
-            }
-             /**
-             * Checks if the command is a valid command to mark a task as undone
-             */
-            public static boolean check(String line){
-                if(!line.startsWith("unmark")) return false;
-                if(line.trim().equals("unmark")) throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
-                try {
-                   int index = Integer.parseInt(line.split("unmark ")[1]);
-
-                } catch (NumberFormatException e) {
-                    throw new UnknownCommandException("Is that even a number...");
-                } 
-                return true;
-            }
-        }
-        private static class DeleteCommand extends Command {
-            private DeleteCommand(String line, TaskList taskList){
-
-                super(new String[]{line.split(" ")[1]}, taskList);
-
-            }     
-
-            @Override
-            public String action(){
-                try {
-                    String confirmation = taskList.delete(Integer.parseInt(args[0])).toString();
-                } catch (IndexOutOfBoundsException e) {
-                    throw new UnknownCommandException("This number points to an unknown empty message to delete. What should I do...");
-                }
-                
-                return String.format("You don't want this task anymore? OK... done! : %n %s %n You still have %d tasks in your list.", 
-                                     taskList.delete(Integer.parseInt(args[0])).toString(), 
-                                     taskList.getSize());
- 
-            }
-             /**
-             * Checks if the command is a valid command to delete a task
-             */
-            public static boolean check(String line){
-                if(!line.startsWith("delete")) return false;
-                if(line.trim().equals("delete")) throw new UnknownCommandException("I am going to delete your whole list if you don't tell me which one to!");
-                try {
-                   int index = Integer.parseInt(line.split("delete ")[1]);
-                  
-
-                } catch (NumberFormatException e) {
-                    throw new UnknownCommandException("Is that a number from a different dimension?");
-                } catch (IndexOutOfBoundsException e){
-                    throw new UnknownCommandException("Your number does not look right...");
-                }
-                return true;
-            }            
-        }
-        private static class FindCommand extends Command{
-
-            private FindCommand(String[] args, TaskList taskList){
-                super(args, taskList);
-            }
-
-            @Override
-            public String action(){
-                String taskResult =  this.taskList.filter((task) -> task.getDescription().contains(this.args[0])).toString();
-                return "I found all the following tasks that match your keyword:\n" + taskResult +"\nPraise me!";
-            }
-             /**
-             * Checks if the command is a valid command to find tasks by keyword
-             */
-            public static boolean check(String line){
-                if(!line.startsWith("find")) return false;
-                if(line.trim().equals("find")) throw new UnknownCommandException("I should go and find a random task.");
-                return true;
-            }
-        }
         
 }

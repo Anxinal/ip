@@ -62,18 +62,18 @@ public class Storage {
     public void writeTaskList(){
 
         try {
+
             File save = new File(path);
             if(!save.exists()){
                 save.createNewFile();
-                System.out.println("New file created at " + path);
            }
 
             ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(path));
             writer.writeObject(taskListRef);
             writer.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println(e);
-            }
+            } 
 
     }
 }
