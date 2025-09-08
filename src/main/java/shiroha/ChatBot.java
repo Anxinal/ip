@@ -33,28 +33,6 @@ public class ChatBot {
         return ChatBot.NAME;
     }
 
-    public void start(){
-        greet();
-        
-        // while(true){
-        //     try{
-        //         String next = this.ui.getNextInput();
-        //         if(next.equals("bye")){
-        //             exit();
-        //             break;
-        //         }
-        //         Command nextAction = parser.parse(next);
-        //         ui.renderChatBotMessage(nextAction.action());
-
-        //     }catch(UnknownCommandException e){
-        //         ui.renderErrorMessage(e);
-        //     }
-
-        // }
-
-        //this.store.writeTaskList();
-       // this.ui.close();        
-    }
 
     public void respond(String input){
         try{

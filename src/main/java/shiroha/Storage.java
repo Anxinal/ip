@@ -17,6 +17,8 @@ public class Storage {
     private Storage(String path){
         this.path = path;
     }
+
+
     /**
      * Initialises the storage system for the chatbot
      * @param path The path to the file to read from and write to
@@ -25,6 +27,8 @@ public class Storage {
     public static Storage initialiseStorage(String path) {
         return new Storage(path);
     }
+
+
     /**
      * Reads the task list from the file specified in the path, throws UnknownCommandException if the file is corrupted
      * If the file does not exist or is empty, returns a new task list
@@ -43,9 +47,9 @@ public class Storage {
           in.close();
           return saved;
 
-        }catch(IOException e){
+        } catch(IOException e){
             throw new UnknownCommandException("This file is already too hard to read so I will start with a new task list");
-        }catch(ClassNotFoundException e){
+        } catch(ClassNotFoundException e){
             System.err.println(e);
         }
         return new TaskList(); 
@@ -58,18 +62,18 @@ public class Storage {
         // TODO: Implement this
 
         try {
-        File save = new File(path);
-        if(!save.exists()){
-            save.createNewFile();
-            System.out.println("New file created at " + path);
-        }
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
-        out.writeObject(taskListRef);
-        out.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+            File save = new File(path);
+            if(!save.exists()){
+                save.createNewFile();
+                System.out.println("New file created at " + path);
+           }
 
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
+            out.writeObject(taskListRef);
+            out.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
 
     }
 }
