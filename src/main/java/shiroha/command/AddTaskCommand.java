@@ -2,6 +2,7 @@ package shiroha.command;
 
 import shiroha.exceptions.UnknownCommandException;
 import shiroha.tasks.TaskList;
+import shiroha.tasks.Task;
 
 abstract class AddTaskCommand extends Command{
             /**
@@ -103,7 +104,7 @@ abstract class AddTaskCommand extends Command{
 
             @Override
             public String action(){
-                return super.toString() + taskList.add(1, this.args).toString();
+                return super.toString() + taskList.add(Task.TaskType.EVENT, this.args).toString();
             }
 
         }
@@ -137,7 +138,7 @@ abstract class AddTaskCommand extends Command{
 
             @Override
             public String action(){
-                return super.toString() + taskList.add(2, this.args).toString();
+                return super.toString() + taskList.add(Task.TaskType.DEADLINE, this.args).toString();
             }
 
         }
