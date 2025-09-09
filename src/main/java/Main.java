@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+  
+    /**
+     *  Set up the JavaFx stage and start the chatbot by sending greet message
+     */
     @Override
     public void start(Stage stage) {
 
@@ -20,6 +24,6 @@ public class Main extends Application {
         stage.show(); // Render the stage.
         bot.start();
     }
-
+    
 }
 

@@ -25,6 +25,7 @@ public class Storage {
      * @return the storage object
      */
     public static Storage initialiseStorage(String path) {
+        assert path.length() > 4;
         return new Storage(path);
     }
 
@@ -37,11 +38,13 @@ public class Storage {
     public TaskList readTaskList(){
         
         try{
+
           if(!new File(path).exists()) {
             TaskList saved = new TaskList();
             taskListRef = saved;
             return saved;
           }
+
           ObjectInputStream reader = new ObjectInputStream(new FileInputStream(path));
           TaskList saved = (TaskList) reader.readObject();
           this.taskListRef = saved;
@@ -52,6 +55,7 @@ public class Storage {
             throw new UnknownCommandException("This file is already too hard to read so I will start with a new task list");
         } catch(ClassNotFoundException e){
             System.err.println(e);
+            assert false: "This should never happen";
         }
         return new TaskList(); 
     }
@@ -71,6 +75,7 @@ public class Storage {
             ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(path));
             writer.writeObject(taskListRef);
             writer.close();
+
             } catch (IOException e) {
                 System.err.println(e);
             } 
