@@ -37,8 +37,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox initialiseDialogBox(String s, Image i, DigalogType type) {
+       
+        assert s.length() < 100;
 
         var db = new DialogBox(s, i);
+
         switch (type) {
         case USER:
             db.setAlignment(Pos.TOP_LEFT);
@@ -52,6 +55,7 @@ public class DialogBox extends HBox {
         default:
             break;
         }
+        
         return db;
     }
 
