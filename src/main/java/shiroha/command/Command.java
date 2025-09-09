@@ -32,35 +32,6 @@ public abstract class Command {
             }
         }
 
-        /**
-         * Processes the user input and returns the corresponding command
-         * @param line the user input
-         * @param taskList reference to current task list
-         * @return the command to be executed
-         * @throws UnknownCommandException if the command is not recognized
-         */
-        public static Command processAction(String line, TaskList taskList){
-            if(ListCommand.check(line)){
-                return new ListCommand(taskList);
-            }
-            if(MarkCommand.check(line)){
-                return new MarkCommand(line, taskList);
-            }
-            if(UnmarkCommand.check(line)){
-                return new UnmarkCommand(line, taskList);
-            }
-            if(AddTaskCommand.check(line)){
-                return AddTaskCommand.convertTaskCommand(line, taskList);
-            }
-            if(DeleteCommand.check(line)){
-                return new DeleteCommand(line, taskList);
-            }
-            if(FindCommand.check(line)){
-                return new FindCommand(new String[]{line.split("find ")[1]}, taskList);
-            }
-            
-            throw new UnknownCommandException("Stop talking like that! I want to understand you (;-;) ");
-        }      
 
         
 
