@@ -1,7 +1,10 @@
 package shiroha.tasks;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.function.Predicate;
+
+import shiroha.tasks.Task.TaskType;
 
 public class TaskList implements Serializable{
     
@@ -26,7 +29,7 @@ public class TaskList implements Serializable{
      * @return The added task
      */
     public Task add(String taskName){
-        Task toAdd = Task.newTask(0,new String[]{taskName});
+        Task toAdd = Task.newTask(Task.TaskType.TODO,new String[]{taskName});
         tasks.add(toAdd);
         return toAdd;
     }
@@ -36,8 +39,8 @@ public class TaskList implements Serializable{
      * @param details The details of the task to add
      * @return The added task
      */
-    public Task add(int taskType, String[] details){
-        Task toAdd = Task.newTask(taskType,details);
+    public Task add(Task.TaskType taskType, String[] details){
+        Task toAdd = Task.newTask(taskType, details);
         tasks.add(toAdd);
         return toAdd;
     }

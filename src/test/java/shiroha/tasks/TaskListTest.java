@@ -20,8 +20,8 @@ public class TaskListTest {
     public void addTaskTest2(){
         TaskList test = new TaskList();
         test.add("read book");
-        test.add(2, new String[]{"return book", "2125-08-30"});
-        test.add(1, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
+        test.add(Task.TaskType.DEADLINE, new String[]{"return book", "2125-08-30"});
+        test.add(Task.TaskType.EVENT, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
 
         TaskListStub stub = new TaskListStub();
         stub.add("read book");
@@ -34,8 +34,8 @@ public class TaskListTest {
     public void markTaskTest(){
         TaskList test = new TaskList();
         Task todo = test.add("read book");
-        Task deadline = test.add(2, new String[]{"return book", "2125-08-30"});
-        Task event = test.add(1, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
+        Task deadline = test.add(Task.TaskType.DEADLINE, new String[]{"return book", "2125-08-30"});
+        Task event = test.add(Task.TaskType.EVENT, new String[]{"project meeting", "2125-09-01", "2125-09-02"});
         test.switchTaskStatus(2, true);
         String expected = "";
         expected += "1. " + todo.toString() + "\n";

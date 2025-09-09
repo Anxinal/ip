@@ -14,6 +14,11 @@ public class Task implements Serializable{
     private boolean isDone;
     private static final long serialVersionUID = 1000;
 
+    public enum TaskType {
+        TODO,
+        EVENT,
+        DEADLINE
+    }
     /**
      * returns the string representation of the task, including its status and description
      */
@@ -32,20 +37,21 @@ public class Task implements Serializable{
      * @param details The details of the task to create
      * @return The created task
      */
-    public static Task newTask(int type, String[] details){
+    public static Task newTask(TaskType type, String[] details){
         switch(type){
-            case 0 -> {
+            case TODO -> {
                 return new TodoTask(details[0]);
             }
-            case 1 -> {
+            case EVENT -> {
                 return new EventTask(details[0], details[1], details[2]);
             }
-            case 2 -> {
+            case DEADLINE -> {
                 return new DeadlineTask(details[0], details[1]);
             }
             default -> throw new UnknownCommandException("");
         }
     }
+    
     /**
     * Returns true if the task is done, false otherwise
     */
@@ -159,6 +165,7 @@ public class Task implements Serializable{
             String overDueMarker = isOverDue() ? " (Overdue!)" : "";
             return overDueMarker + "[D]" + super.toString() + String.format(" (by: %s)", deadline.format(DateTimeFormatter.ofPattern(DATE_PRINT_FORMAT)));
         }
+
         @Override
         public boolean equals(Object other) {
             if (this == other)  return true;

@@ -35,27 +35,9 @@ public class ChatBot {
 
     public void start(){
         greet();
-        
-        // while(true){
-        //     try{
-        //         String next = this.ui.getNextInput();
-        //         if(next.equals("bye")){
-        //             exit();
-        //             break;
-        //         }
-        //         Command nextAction = parser.parse(next);
-        //         ui.renderChatBotMessage(nextAction.action());
-
-        //     }catch(UnknownCommandException e){
-        //         ui.renderErrorMessage(e);
-        //     }
-
-        // }
-
-        //this.store.writeTaskList();
-       // this.ui.close();        
     }
 
+    
     public void respond(String input){
         try{
             if(input.equals("bye")){
@@ -77,7 +59,6 @@ public class ChatBot {
     private void greet(){
         ui.renderChatBotMessage("Hello I am your Chatbot "+ ChatBot.NAME 
         + " \n Anything in your mind right now? Want to walk by the sea?");
-
     }
     /**
      * Display the goodbye message
