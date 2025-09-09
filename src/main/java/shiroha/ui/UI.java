@@ -131,8 +131,7 @@ public class UI {
      * Closes the scanner
      */
     public void close(){
-        return;
-
+        System.exit(0);
     }
 
 }

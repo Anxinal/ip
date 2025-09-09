@@ -42,7 +42,7 @@ public class ChatBot {
         try{
             if(input.equals("bye")){
                 exit();
-                //this.ui.close();
+                this.ui.close();
                 ui.renderChatBotMessage("See you.");
             }
             Command nextAction = parser.parse(input);
