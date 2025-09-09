@@ -38,7 +38,7 @@ public class UI {
 
         // handle the chatbot instance for responding to user input
         this.bot = bot;
-
+        assert this.bot != null;
         // initialise the images for the user and the bot
         userImage  = new Image(this.getClass().getResourceAsStream(USER_LOGO_PATH));
         botImage = new Image(this.getClass().getResourceAsStream(BOT_LOGO_PATH));
