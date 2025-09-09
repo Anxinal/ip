@@ -29,6 +29,7 @@ public class TaskList implements Serializable{
      * @return The added task
      */
     public Task add(String taskName){
+        
         Task toAdd = Task.newTask(Task.TaskType.TODO,new String[]{taskName});
         tasks.add(toAdd);
         return toAdd;
@@ -72,6 +73,7 @@ public class TaskList implements Serializable{
      * @return The number of tasks in the task list
      */
     public int getSize(){
+
         return tasks.size();
     }
     
@@ -81,6 +83,7 @@ public class TaskList implements Serializable{
      * @return The deleted task
      */
     public Task delete(int index){
+        assert index > 0;
         return tasks.remove(index - 1);
     }
     /**

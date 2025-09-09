@@ -28,6 +28,8 @@ public class Task implements Serializable{
         return "["+ finishStat +"]" + " " + description;
     }
     private Task(String description){
+
+        assert description.trim() != null;
         this.description = description;
         this.isDone = false;
     }
@@ -38,6 +40,7 @@ public class Task implements Serializable{
      * @return The created task
      */
     public static Task newTask(TaskType type, String[] details){
+        
         switch(type){
             case TODO -> {
                 return new TodoTask(details[0]);
@@ -48,7 +51,10 @@ public class Task implements Serializable{
             case DEADLINE -> {
                 return new DeadlineTask(details[0], details[1]);
             }
-            default -> throw new UnknownCommandException("");
+            default -> {
+                assert false: "Should not reach this line";
+                throw new UnknownCommandException("");
+            }
         }
     }
     
@@ -105,7 +111,9 @@ public class Task implements Serializable{
         static final String DATE_PRINT_FORMAT = "MMM dd yy";
 
         private EventTask(String description, String from, String to){
+
             super(description);
+            assert description.trim() != null;
             try {
                 this.from = LocalDate.parse(from);
                 this.to = LocalDate.parse(to);
