@@ -13,7 +13,7 @@ abstract class AddTaskCommand extends Command{
              */
         public static boolean check(String line){
 
-            if(!(line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event"))) {
+            if(!(line.startsWith("todo") || line.startsWith("deadline") || line.startsWith("event") || line.startsWith("recur"))) {
                 return false;
             }
             if(line.split(" ").length == 1) {
@@ -36,6 +36,9 @@ abstract class AddTaskCommand extends Command{
             }
             else if(DeadlineCommand.check(line)){
                 return new DeadlineCommand(line.split("deadline ")[1], taskList);
+            }
+            else if(RecurringCommand.check(line)) {
+                return new RecurringCommand(line.split("recur ")[1], taskList);
             }
             else{
                 throw new UnknownCommandException("I don't understand what task you want to add");       
@@ -139,6 +142,50 @@ abstract class AddTaskCommand extends Command{
             @Override
             public String action(){
                 return super.toString() + taskList.add(Task.TaskType.DEADLINE, this.args).toString();
+            }
+
+        }
+
+        private static class RecurringCommand extends AddTaskCommand{
+            /**
+             * Checks if the command is a valid command to create a deadline task
+             */
+            
+            public static boolean check(String line){                     
+                if(!line.startsWith("recur")) return false;
+                if(!line.contains(" /from ")) throw new UnknownCommandException("So when shall we start?");
+                return true;
+            }
+
+            // No name should be included in event details
+             private RecurringCommand(String eventDetails, TaskList taskList){
+
+                super(new String[3], taskList);
+
+                String[] temp = eventDetails.split(" /from ");
+                if(temp.length < 2 || temp[0].trim().equals("")) {
+                    throw new UnknownCommandException("I will give a random name to your task list XD!");
+                }
+
+                this.args[0] = temp[0];
+                String[] temp2 = temp[1].split(" /rate ");
+
+                if(temp2.length < 2 || temp2[0].trim().equals("")) {
+                    System.out.println(temp2.length);
+                    System.out.println(temp2[0]);
+                    throw new UnknownCommandException("By default I assume it will never happen again!");
+                }
+                if(!Command.isConvertableToNumber(temp2[1])) {
+                    throw new UnknownCommandException("Please put your recurring rate as a number...");
+                }
+                this.args[1] = temp2[0];
+                this.args[2] = temp2[1];
+
+            }
+
+            @Override
+            public String action(){
+                return super.toString() + taskList.add(Task.TaskType.RECURRING, this.args).toString();
             }
 
         }
