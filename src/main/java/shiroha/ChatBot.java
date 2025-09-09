@@ -41,9 +41,10 @@ public class ChatBot {
     public void respond(String input){
         try{
             if(input.equals("bye")){
-                exit();
-                this.ui.close();
                 ui.renderChatBotMessage("See you.");
+                store.writeTaskList();
+                this.ui.close();
+                exit();                      
             }
             Command nextAction = parser.parse(input);
             ui.renderChatBotMessage(nextAction.action());

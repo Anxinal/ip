@@ -11,22 +11,25 @@ import shiroha.exceptions.UnknownCommandException;
 
 public class RecurringTask extends Task {
 
-    Stream<LocalDate> happenings;
+
+    private LocalDate start;
+    private int interval;
 
 
-    protected RecurringTask(String startDateString, int recurrence, String description) {
+    protected RecurringTask(String startDateString, int interval, String description) {
        
         super(description);
         try {
             LocalDate start = LocalDate.parse(startDateString);
-            this.happenings = Stream.iterate(start, previousDay -> previousDay.plusDays(recurrence));
+            this.start = start;
+            this.interval = interval;
         } catch (DateTimeParseException e) {
             throw new UnknownCommandException("Your event date comes from... imagination?");
         }
     }
-
+    
     private List<LocalDate> getNearestHappenings(int count) {
-
+         Stream<LocalDate> happenings = Stream.iterate(start, previousDay -> previousDay.plusDays(interval));
         LocalDate yesterday = LocalDate.now().minusDays(1); // so that today is also included
         return happenings.filter(current -> current.isAfter(yesterday))
                          .limit(count)
@@ -35,6 +38,7 @@ public class RecurringTask extends Task {
 
     private LocalDate getFirstHappening() {
         return getNearestHappenings(1).get(0);
+      
     }
 
     @Override
@@ -44,5 +48,6 @@ public class RecurringTask extends Task {
                             super.toString(),
                             getFirstHappening().format(DateTimeFormatter.ofPattern(Task.DATE_PRINT_FORMAT)));
     }
+
 
 }

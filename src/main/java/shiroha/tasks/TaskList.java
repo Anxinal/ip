@@ -10,7 +10,7 @@ public class TaskList implements Serializable{
     
     private ArrayList<Task> tasks;
     //for version control in case different serial IDs are implemented
-    private static final long serialVersionUID = 1000;
+    private static final long serialVersionUID = 1001;
 
     public TaskList(){
         tasks = new ArrayList<>(100);

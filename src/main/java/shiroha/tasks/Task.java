@@ -13,7 +13,7 @@ public class Task implements Serializable{
     
     private String description;
     private boolean isDone;
-    private static final long serialVersionUID = 1000;
+    private static final long serialVersionUID = 1001;
     static final String DATE_PRINT_FORMAT = "MMM dd yy";
 
     public enum TaskType {
@@ -42,7 +42,7 @@ public class Task implements Serializable{
      * @param details The details of the task to create
      * @return The created task
      */
-    public static Task newTask(TaskType type, String[] details){
+    public static Task newTask(TaskType type, String[] details) {
         
         switch(type){
             case TODO -> {
@@ -55,7 +55,7 @@ public class Task implements Serializable{
                 return new DeadlineTask(details[0], details[1]);
             }
             case RECURRING -> {
-                return new RecurringTask(details[2], Integer.parseInt(details[1]), details[0]);
+                return new RecurringTask(details[1], Integer.parseInt(details[2]), details[0]);
             }
             default -> {
                 assert false: "Should not reach this line";
@@ -67,19 +67,19 @@ public class Task implements Serializable{
     /**
     * Returns true if the task is done, false otherwise
     */
-    public boolean isDone(){
+    public boolean isDone() {
         return this.isDone;
     }
     /**
      * Marks the task as done, whether it is already done or not
      */
-    public void mark(){
+    public void mark() {
         this.isDone = true;
     }
         /**
      * Marks the task as not done,  whether it is already done or not
      */
-    public void unmark(){
+    public void unmark() {
         this.isDone = false;
     }
 
@@ -99,7 +99,7 @@ public class Task implements Serializable{
      * Return the description of the task as how it is initialised
      * @return the string description of the task
      */
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
 
