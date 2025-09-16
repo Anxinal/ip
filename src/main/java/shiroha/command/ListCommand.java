@@ -12,9 +12,10 @@ public class ListCommand extends Command{
     public String action(){
         return this.taskList.toString();
     }
-             /**
-             * Checks if the command is a valid command to list all tasks
-             */
+    
+    /**
+    * Checks if the command is a valid command to list all tasks
+    */
     public static boolean check(String line){
         return line.equals("list");
     }
