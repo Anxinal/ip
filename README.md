@@ -1,26 +1,116 @@
-# Duke project template
+# Shiroha User Guide — Outline (CLI Task Manager)
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+## Introduction
 
-## Setting up in Intellij
+What is Shiroha?
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+Core features at a glance (Todo / Deadline / Event)
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+Who is this for?
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+How this guide is organized ?
+
+## Quick Start
+
+Installation (macOS / Linux / Windows)
+
+First run
+
+Basic workflow in 60 seconds (add → list → done)
+
+TLDR: command cheat sheet
+
+## Concepts
+
+Task types
+
+Todo (no time)
+
+Deadline (/by date-time)
+
+Event (/from … /to …)
+
+IDs vs. filters vs. search
+
+## Configuration
+
+Global config file & location
+
+Default date/time format preferences
+
+
+Autosave & backup settings
+
+
+
+## Commands 
+
+
+Deleting & Archiving
+
+Delete by id: delete <id>
+
+Safe delete (confirmations, --force)
+
+Bulk delete with filters
+
+Archive vs. permanent delete (if supported)
+
+Recover from backups (if supported)
+
+
+
+## Error handling
+
+Common errors and meanings
+
+Invalid date/time
+
+Overlapping event times
+
+Unknown command / option
+
+Missing required fields
+
+How to enable verbose logs (--verbose, --debug)
+
+Exit codes reference
+
+
+## FAQ
+
+How are IDs assigned?
+
+What date formats are supported?
+
+Can I use natural language dates?
+
+
+
+## Appendix A — Command Reference (Detailed)
+
+Full syntax, flags, notes, examples for every command:
+
+todo
+
+deadline
+
+event
+
+recur
+
+list
+
+find
+
+mark
+
+unmark
+
+delete
+
+
+
+
+
+
