@@ -1,113 +1,125 @@
-# Shiroha User Guide — Outline (CLI Task Manager)
-
+# Shiroha User Guide 
 ## Introduction
+### What is Shiroha? :cloud:
+Shiroha is a chatbot that allows you to add, track and delete different tasks through a list of commands
+Shiroha allows 4 different types of task to be added, which includes a simple todo task, a task with a deadline, an event and a recurring task
+### Who is this for?
+This chatbot is for you! Who needs something to easily track all the tasks that you would have forgotten.
+### How this guide is organized :question:
+Here is the index:
+[Quick Start](#quick-start) :smile:
+[Concepts](#concepts) :heart:
+[Command List](#commands) :+1:
+[Errors?](#error-handling) :bug:
+[FAQ](#faq) :question:
 
-What is Shiroha?
-
-Core features at a glance (Todo / Deadline / Event)
-
-Who is this for?
-
-How this guide is organized ?
 
 ## Quick Start
 
-Installation (macOS / Linux / Windows)
-
-First run
-
-Basic workflow in 60 seconds (add → list → done)
-
-TLDR: command cheat sheet
+### Installation (Windows)
+Click this link and download
+### First run
+Run the application directly 
+### Basic workflow 
+Refer to the text box. Put in the command and press send everytime
+You can try to start adding a simple `todo` command and use `list` to show it.
+Make sure that your command is supported or appears on this user guide!
 
 ## Concepts
 
-Task types
+1. **Task types**: For each task we track in the chatbot, it comes with different types , which includes "todo", "event", "deadline", "recurring". 
+Every task can be marked done with the mark command and unmarked using the unmark command. When a task is done and marked, the box in front of the task description will look like `[X]`
 
-Todo (no time)
 
-Deadline (/by date-time)
+2. **Todo** : A simple task that only has a description.
 
-Event (/from … /to …)
+3. **Deadline** : A  task that has a description and a deadline. The program will show (Overdue!) on the task description when the due is past.
 
-IDs vs. filters vs. search
+4. **Event** : A task that has a description and a starting/ending time. The program will show (Happening!) on the task description when today is within the event period.
+
+5. **Recurring** : A task that has a description and a starting time and an interval(in number of days). Each happening of the event is calculated by the formula `starting date + interval(in days) * n`. The program will show the most recent happening of the event **past and including** today
 
 ## Configuration
 
-Global config file & location
+### Global config file & location
+The configuration file, including all memory data of the chatbot is saved in a special file named `data/shirohaTaskMemory.mem`.
 
-Default date/time format preferences
+### Default date/time format preferences
+The default date format is `DD-MM-YYYY`.(E.g. 05-07-2025 means 5 Jul 2025)
 
-
-Autosave & backup settings
-
-
+### Autosave & backup settings
+The task list memory is auto saved when the program exits normally.
 
 ## Commands 
 
+All `<Date>` follows the [defualt date format](#default-datetime-format-preferences)
+### Creating tasks
+`todo <taskname>`: creates a new todo task
+  `<taskname>`: String representation of the task
 
-Deleting & Archiving
+`deadline <taskname> /by <Date>` creates a new deadline task
+  `<taskname>` :String representation of the task
+  `<Date1>` :The date where the task starts in the default date format
 
-Delete by id: delete <id>
+ `event <taskname> /from <Date1> /to <Date2>` creates a new event
+  `<taskname>`: String representation of the task
+  `<Date1>` :The date where the task starts in the default date format
+  `<Date2>`: The date where the task ends in the default date format
 
-Safe delete (confirmations, --force)
+`recur <taskname> /start <Date> /rate <i>` creates a new recurring task that starts from the date and repeats every i days
+  `<taskname>` :String representation of the task
+  `<Date>`: The date where the task starts in the default date format
+  `<i>` :An integer representing the number of days between each occurence of the event
 
-Bulk delete with filters
+### Editing/Deleting Task
 
-Archive vs. permanent delete (if supported)
+`delete <id>` Delete the task by numeric id shown on the list
+  `<id>`: An integer representing the index of the task on the list 
 
-Recover from backups (if supported)
+`mark <id>` Mark a task as done on the list 
+`<id>`: An integer representing the index of the task on the list 
 
+`unmark <id>` Unmark a task as done on the list 
+`<id>` :An integer representing the index of the task on the list 
 
+### Search Tasks
+`find <key>` Find all tasks that contains the key in the task list
+`<key>`: A string where all tasks whose description matches or contains it will be returned
 
 ## Error handling
 
-Common errors and meanings
+### Common errors and meanings
+An error is returned when the dialog box of the chat bot turns red 
+The error message is usually indicative of where the problem is with your command
+The following are a few examples 
 
-Invalid date/time
+### Invalid date/time
+It usually returns the following error message  
+>"Your date seems weird..."
 
-Overlapping event times
+Remember to check the default date format before inputing the command
 
-Unknown command / option
+### Unknown command / option
+It usually returns the following error message  
+>"I don't understand what you are saying"
 
-Missing required fields
+Remember to check all available commands
 
-How to enable verbose logs (--verbose, --debug)
-
-Exit codes reference
 
 
 ## FAQ
 
-How are IDs assigned?
+### How are IDs assigned?
+The IDs are assigned in the ascending numerical order.
+Whenever a task is deleted. The order will be readjusted such that the **index will always increase only by 1 between adjacent tasks in the list**
+### What date formats are supported?
+See [defualt date format](#default-datetime-format-preferences).
+Sadly, other date formats are currently unsupported
 
-What date formats are supported?
-
-Can I use natural language dates?
 
 
 
-## Appendix A — Command Reference (Detailed)
 
-Full syntax, flags, notes, examples for every command:
-
-todo
-
-deadline
-
-event
-
-recur
-
-list
-
-find
-
-mark
-
-unmark
-
-delete
 
 
 
