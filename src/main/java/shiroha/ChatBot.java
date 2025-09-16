@@ -13,6 +13,7 @@ public class ChatBot {
     private UI ui;
     private Parser parser;
     private static final String DEFAULT_MEMO_PATH = "./data/ShirohaTaskMemory.mem";
+    
     public ChatBot(){
         store = Storage.initialiseStorage(DEFAULT_MEMO_PATH);
         ui = new UI(this);

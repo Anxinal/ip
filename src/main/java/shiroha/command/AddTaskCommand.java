@@ -157,7 +157,6 @@ abstract class AddTaskCommand extends Command{
                 return true;
             }
 
-            // No name should be included in event details
              private RecurringCommand(String eventDetails, TaskList taskList){
 
                 super(new String[3], taskList);

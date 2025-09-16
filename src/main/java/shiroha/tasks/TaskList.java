@@ -36,7 +36,7 @@ public class TaskList implements Serializable{
     }
     /**
      * Adds a new task to the task list, when extra details are needed
-     * @param taskType The type of task to add (0 = todo, 1 = event, 2 = deadline)
+     * @param taskType The type of task to add 
      * @param details The details of the task to add
      * @return The added task
      */
@@ -86,6 +86,7 @@ public class TaskList implements Serializable{
         assert index > 0;
         return tasks.remove(index - 1);
     }
+
     /**
      * Filters the task list based on the given condition
      * @param condition The condition to filter the tasks
@@ -95,10 +96,13 @@ public class TaskList implements Serializable{
         TaskList filtered = new TaskList();
         
         for(Task t: this.tasks){
+
             if(condition.test(t)){
                 filtered.tasks.add(t);
             }
+
         }
+
         return filtered;
     }
 

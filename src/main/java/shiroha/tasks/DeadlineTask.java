@@ -22,6 +22,7 @@ public class DeadlineTask extends Task {
         }
             
     }
+
     /**
      * Checks if the event is already overdue based on the current date
     * @return true if the task is already overdue, false otherwise
@@ -38,10 +39,14 @@ public class DeadlineTask extends Task {
 
     @Override
     public boolean equals(Object other) {
-        if (this == other)  return true;
-        if (other == null || getClass() != other.getClass()) return false;
-        DeadlineTask otherDeadline = (DeadlineTask) other;
-        return super.equals(otherDeadline) && this.deadline.equals(otherDeadline.deadline);
+        if (this == other) { 
+            return true; 
+        } else if (other == null || getClass() != other.getClass()) {
+            return false;
+        } else {
+            DeadlineTask otherDeadline = (DeadlineTask) other;
+            return super.equals(otherDeadline) && this.deadline.equals(otherDeadline.deadline);
+        }
     }
 }
 

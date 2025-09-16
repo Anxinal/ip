@@ -29,7 +29,7 @@ public class RecurringTask extends Task {
     }
     
     private List<LocalDate> getNearestHappenings(int count) {
-         Stream<LocalDate> happenings = Stream.iterate(start, previousDay -> previousDay.plusDays(interval));
+        Stream<LocalDate> happenings = Stream.iterate(start, previousDay -> previousDay.plusDays(interval));
         LocalDate yesterday = LocalDate.now().minusDays(1); // so that today is also included
         return happenings.filter(current -> current.isAfter(yesterday))
                          .limit(count)
