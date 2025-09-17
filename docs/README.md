@@ -17,7 +17,7 @@ Here is the index:
 ## Quick Start
 
 ### Installation (Windows)
-Click this [link](https://github.com/Anxinal/ip/release/latest) and download
+Click this [link](https://github.com/Anxinal/ip/releases/latest) and download
 ### First run
 Run the application directly 
 ### Basic workflow 
