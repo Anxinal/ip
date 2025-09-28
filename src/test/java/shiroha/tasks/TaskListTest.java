@@ -1,10 +1,14 @@
 package shiroha.tasks;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 
 public class TaskListTest {
+
     @Test
+    /**
+     * Tests adding a task
+     */
     public void addTaskTest1(){
 
         TaskList test = new TaskList();
@@ -17,6 +21,9 @@ public class TaskListTest {
     }
 
     @Test
+    /**
+     * Tests adding a task
+     */
     public void addTaskTest2(){
         TaskList test = new TaskList();
         test.add("read book");
@@ -31,6 +38,9 @@ public class TaskListTest {
     }
 
     @Test
+    /**
+     * Tests marking and unmarking a task
+     */
     public void markTaskTest(){
         TaskList test = new TaskList();
         Task todo = test.add("read book");
