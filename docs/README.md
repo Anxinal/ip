@@ -17,7 +17,7 @@ Here is the index:
 ## Quick Start
 
 ### Installation (Windows)
-Click this link and download
+Click this [link](https://github.com/Anxinal/ip/releases/latest) and download
 ### First run
 Run the application directly 
 ### Basic workflow 
@@ -45,7 +45,7 @@ Every task can be marked done with the mark command and unmarked using the unmar
 The configuration file, including all memory data of the chatbot, is saved in a special file named `data/shirohaTaskMemory.mem`.
 
 ### Default date/time format preferences
-The default date format is `DD-MM-YYYY`.(E.g. 05-07-2025 means 5 Jul 2025)
+The default date format is `YYYY-MM-DD`.(E.g.2025-07-05 means 5 Jul 2025)
 
 ### Autosave & backup settings
 The task list memory is auto saved when the program exits normally.
@@ -66,7 +66,7 @@ All `<Date>` follows the [defualt date format](#default-datetime-format-preferen
   `<Date1>` :The date where the task starts in the default date format
   `<Date2>`: The date where the task ends in the default date format
 
-`recur <taskname> /start <Date> /rate <i>` creates a new recurring task that starts from the date and repeats every i days
+`recur <taskname> /from <Date> /rate <i>` creates a new recurring task that starts from the date and repeats every i days
   `<taskname>` :String representation of the task
   `<Date>`: The date where the task starts in the default date format
   `<i>` :An integer representing the number of days between each occurence of the event
