@@ -1,10 +1,8 @@
 package shiroha;
 
-import shiroha.command.Command;
-import shiroha.command.Parser;
-import shiroha.exceptions.UnknownCommandException;
-import shiroha.ui.UI;
 import javafx.scene.Scene;
+import shiroha.command.Parser;
+import shiroha.ui.UI;
 public class ChatBot {
 
     private static final String NAME = "SHIROHA"; 
@@ -38,7 +36,10 @@ public class ChatBot {
         greet();
     }
 
-    
+   /**
+    * Processes the user input and responds accordingly
+    * @param input the user input
+    */ 
     public void respond(String input){
         try{
             if(input.equals("bye")){
