@@ -54,7 +54,6 @@ public class Storage {
         } catch(IOException e) {
             throw new UnknownCommandException("This file is already too hard to read so I will start with a new task list");
         } catch(ClassNotFoundException e) {
-            System.err.println(e);
             assert false: "This should never happen";
         }
         return new TaskList(); 
