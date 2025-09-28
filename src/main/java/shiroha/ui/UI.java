@@ -2,16 +2,13 @@ package shiroha.ui;
 
 
 import javafx.scene.Scene;
-import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.stage.Stage;
-
+import javafx.scene.layout.VBox;
 import shiroha.ChatBot;
 
 public class UI {
@@ -110,7 +107,8 @@ public class UI {
      * @param s The message to be rendered
      */
     public void renderChatBotMessage(String output){
-        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(output, botImage, DialogBox.DigalogType.NORMAL));
+        this.dialogContainer.getChildren()
+            .add(DialogBox.initialiseDialogBox(output, botImage, DialogBox.DigalogType.NORMAL));
     }
 
     /**
@@ -118,7 +116,8 @@ public class UI {
      * @param input The message to be rendered
      */
     public void renderUserMessage(String input){
-        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(input, userImage, DialogBox.DigalogType.USER));
+        this.dialogContainer.getChildren()
+            .add(DialogBox.initialiseDialogBox(input, userImage, DialogBox.DigalogType.USER));
     }
 
     /**
@@ -126,7 +125,8 @@ public class UI {
      * @param err The exception containing the error message to be rendered
      */
     public void renderErrorMessage(Exception err){
-        this.dialogContainer.getChildren().add(DialogBox.initialiseDialogBox(err.getMessage(), botImage, DialogBox.DigalogType.ERROR));
+        this.dialogContainer.getChildren()
+            .add(DialogBox.initialiseDialogBox(err.getMessage(), botImage, DialogBox.DigalogType.ERROR));
     }
 
 
