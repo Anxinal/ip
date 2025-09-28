@@ -51,9 +51,9 @@ public class Storage {
           reader.close();
           return saved;
 
-        } catch(IOException e){
+        } catch(IOException e) {
             throw new UnknownCommandException("This file is already too hard to read so I will start with a new task list");
-        } catch(ClassNotFoundException e){
+        } catch(ClassNotFoundException e) {
             System.err.println(e);
             assert false: "This should never happen";
         }
@@ -68,9 +68,9 @@ public class Storage {
         try {
 
             File save = new File(path);
-            if(!save.exists()){
+            if(!save.exists()) {
                 save.createNewFile();
-           }
+            }
 
             ObjectOutputStream writer = new ObjectOutputStream(new FileOutputStream(path));
             writer.writeObject(taskListRef);

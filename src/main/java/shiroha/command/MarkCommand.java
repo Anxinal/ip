@@ -5,7 +5,12 @@ import shiroha.tasks.TaskList;
 
 public class MarkCommand extends Command{
     static final String notifMessage = "That's happy news. Wait a moment..";
-
+   
+    /**
+     * Constructor for MarkCommand
+     * @param line the user input
+     * @param taskList the task list to be modified
+     */
     protected MarkCommand(String line, TaskList taskList){
         super(new String[]{line.split(" ")[1]}, taskList);
 
@@ -32,8 +37,7 @@ public class MarkCommand extends Command{
         }
         else if(line.trim().equals("mark")) {
             throw new UnknownCommandException("I am going to mark a random task for you to screw up your list!");
-        }
-                
+        }           
         else if(!Command.isConvertableToNumber(line.split("mark ")[1])) {
             throw new UnknownCommandException("Is that even a number...");
         }

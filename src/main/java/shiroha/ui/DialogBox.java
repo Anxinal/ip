@@ -4,11 +4,11 @@ package shiroha.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.Node;
 
 public class DialogBox extends HBox {
 
@@ -35,10 +35,16 @@ public class DialogBox extends HBox {
         this.getChildren().addAll(text, displayPicture);
         HBox.setMargin(displayPicture, getInsets());
     }
+    /** 
+     * A factory method that initialises a dialog box with the specified type
+     * @param message Message to be displayed
+     * @param image The user/chatbot Image to be displayed
+     * @param type The type of dialog box to be displayed
+     * @return A dialog box with the specified type
+     */
+    public static DialogBox initialiseDialogBox(String message, Image image, DigalogType type) {
 
-    public static DialogBox initialiseDialogBox(String s, Image i, DigalogType type) {
-
-        var db = new DialogBox(s, i);
+        var db = new DialogBox(message, image);
         switch (type) {
         case USER:
             db.setAlignment(Pos.TOP_LEFT);

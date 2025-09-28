@@ -7,7 +7,12 @@ public class UnmarkCommand extends Command{
             
     static final String NOTIF_MESSAGE = "Never mind about that. I'll do it for you as well";
 
-    UnmarkCommand(String line, TaskList taskList){
+    /**
+     * Constructor for UnmarkCommand
+     * @param line the user input
+     * @param taskList the task list to be modified
+     */
+    protected UnmarkCommand(String line, TaskList taskList){
         super(new String[]{line.split(" ")[1]}, taskList);
     }
 
